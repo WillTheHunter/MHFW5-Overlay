@@ -46,6 +46,7 @@ import time
 TARGET_PROC = "mhf.exe"
 ARRAY_PTR_RVAS = (0x51E3378, 0x5725978)
 STRIDE = 0xD80
+HOLD_SECONDS = 2.0          # keep the last good monster list this long when a read comes back empty
 MAX_SLOTS = 40
 TABLE_RVA = 0x57D9AEE
 KEY_RVA = 0xC6F714
@@ -272,7 +273,7 @@ SCHEMA = [
     ("General", "style", "style", "lvdew", "lvdew|alexander", None),
     ("General", "update_time", "update_time", "0.03", "float:0.01:5",
      "seconds between memory reads and redraws. 0.03 = about 30 times a second. Lower = faster, 0.01 is the limit"),
-    ("General", "show_small_monsters", "show_small_monsters", "true", "bool",
+    ("General", "show_small_monsters", "show_small_monsters", "false", "bool",
      "also list small monsters (Velociprey, Hermitaur ...) below the large ones"),
     ("General", "hide_dead_small_monsters", "hide_dead_small", "true", "bool", "hide small monsters at 0 HP"),
     ("General", "show_size", "show_size", "true", "bool", "show the quest size of large monsters"),
@@ -289,7 +290,7 @@ SCHEMA = [
      "hide the overlay outside quests (in town the game keeps odd entries). It needs at least one known large "
      "monster; unknown ids are ignored. Switch off if the overlay stays hidden in a real quest"),
     ("General", "only_when_focused", "only_when_focused", "false", "bool",
-     "show the overlay only while the game window (or this console) is the active window"),
+     "show the overlay only while the game window is the active window (it is always hidden while this console / terminal is active)"),
     ("General", "hide_on_screenshot", "hide_on_screenshot", "false", "bool",
      "hide the overlay for a moment when a screenshot key is pressed (off by default)"),
     ("General", "screenshot_hide_seconds", "screenshot_hide_seconds", "2", "float:0.2:30",
@@ -310,13 +311,13 @@ SCHEMA = [
     ("Layout", "preset", "preset", "custom", "|".join(PRESETS_LIST_STR),
      "custom = use x and y below. left-center = Lvdew's original place (left side, centered on height). "
      "Others: top-left, top-right, bottom-left, bottom-right, right-center"),
-    ("Layout", "x", "x", "100", "float:0:100", None),
-    ("Layout", "y", "y", "0", "float:0:100", None),
+    ("Layout", "x", "x", "1", "float:0:100", None),
+    ("Layout", "y", "y", "50", "float:0:100", None),
     ("Layout", "fix_x", "fix_x", "0", "int:-5000:5000", "extra pixels added to the position (fine tuning)"),
     ("Layout", "fix_y", "fix_y", "0", "int:-5000:5000", None),
 
     ("Lvdew", None, None, None, None, "Settings for style = lvdew"),
-    ("Lvdew", "text_size", "lv_text_size", "10", "int:6:72", "text size in points"),
+    ("Lvdew", "text_size", "lv_text_size", "9", "int:6:72", "text size in points"),
     ("Lvdew", "font_family", "lv_font_family", "Segoe UI", "str", "font name (must be installed)"),
     ("Lvdew", "font_weight", "lv_font_weight", "bold", "normal|bold", None),
     ("Lvdew", "numbers", "lv_numbers", "below", "below|inline|off",
@@ -325,7 +326,7 @@ SCHEMA = [
     ("Lvdew", "bar_mode", "lv_bar_mode", "simple", "simple|capture",
      "simple = whole bar turns yellow in the capture range; capture = bar stays green and the capture range "
      "part of it is painted yellow"),
-    ("Lvdew", "bar_width", "lv_bar_width", "240", "int:20:1200", "bar length in pixels"),
+    ("Lvdew", "bar_width", "lv_bar_width", "180", "int:20:1200", "bar length in pixels"),
     ("Lvdew", "bar_height", "lv_bar_height", "8", "int:2:60", "bar thickness in pixels"),
     ("Lvdew", "bar_position", "lv_bar_position", "below", "below|above|left|right",
      "where the bar sits relative to the text of each monster"),
@@ -664,6 +665,7 @@ if os.name == "nt":
     u32.GetAsyncKeyState.argtypes = [ctypes.c_int]
     u32.GetAsyncKeyState.restype = ctypes.c_short
     k32.GetConsoleWindow.restype = _P
+    u32.GetClassNameW.argtypes = [_P, _P, ctypes.c_int]
     _BAD = (None, 0, 0xFFFFFFFF, 0xFFFFFFFFFFFFFFFF)
 
     class PROCESSENTRY32W(ctypes.Structure):
@@ -803,16 +805,51 @@ class Game:
         u32.EnumWindows(cb_type(cb), 0)
         return max(found)[1] if found else None
 
-    def foreground_ok(self):
-        """True when the game window (or this program's console) is the active window."""
+    def _terminal_pids(self):
+        """Process ids of this program and of the programs that started it (cmd, PowerShell, Windows Terminal ...)."""
+        if getattr(self, "_term_pids", None) is None:
+            pids, parent = {os.getpid()}, {}
+            try:
+                snap = k32.CreateToolhelp32Snapshot(0x2, 0)
+                if snap not in _BAD:
+                    e = PROCESSENTRY32W()
+                    e.dwSize = ctypes.sizeof(e)
+                    ok = k32.Process32FirstW(snap, ctypes.byref(e))
+                    while ok:
+                        parent[e.th32ProcessID] = e.th32ParentProcessID
+                        ok = k32.Process32NextW(snap, ctypes.byref(e))
+                    k32.CloseHandle(snap)
+                p = os.getpid()
+                for _ in range(6):
+                    p = parent.get(p)
+                    if not p or p in pids:
+                        break
+                    pids.add(p)
+            except Exception:
+                pass
+            self._term_pids = pids
+        return self._term_pids
+
+    def foreground_kind(self):
+        """What has the focus: 'game', 'console' (this program's window / any terminal) or 'other'."""
         fg = u32.GetForegroundWindow()
         if not fg:
-            return False
+            return "other"
         pid = wt.DWORD()
         u32.GetWindowThreadProcessId(fg, ctypes.byref(pid))
-        if pid.value in (self.pid, os.getpid()):
-            return True
-        return fg == k32.GetConsoleWindow()
+        if pid.value == self.pid:
+            return "game"
+        if fg == k32.GetConsoleWindow() or pid.value in self._terminal_pids():
+            return "console"
+        buf = ctypes.create_unicode_buffer(128)
+        u32.GetClassNameW(fg, buf, 128)
+        if buf.value in ("ConsoleWindowClass", "CASCADIA_HOSTING_WINDOW_CLASS", "PseudoConsoleWindow"):
+            return "console"
+        return "other"
+
+    def foreground_ok(self):
+        """True when the game window is the active window."""
+        return self.foreground_kind() == "game"
 
     def game_window_origin(self):
         """Screen x, y, width, height of the game's client area, or None (cheap: hwnd is cached)."""
@@ -847,18 +884,31 @@ class Reader(threading.Thread):
         self.state = {"status": "waiting for mhf.exe", "monsters": []}
         self._last_sig = None
         self._lock = threading.Lock()
+        self._seen = {}              # (slot, id) -> consecutive reads in which the entry looked valid
+        self._good = []              # last list that was shown
+        self._good_t = 0.0
+        self._diag_t = 0.0
 
     def read_monsters(self):
         g = self.g
         base = g.mhfo[0]
         key = g.u16(base + KEY_RVA)
         arr = None
+        ptrs = []
         for rva in ARRAY_PTR_RVAS:
             p = g.u32(base + rva)
-            if p and g.read(p, 2) == b"\x01\x01":
-                arr = p
+            ptrs.append(p)
+            if p:
+                # the first pointer that is set decides; an unrelated old array is never used as a fallback
+                if g.read(p, 2) == b"\x01\x01":
+                    arr = p
                 break
         if arr is None or key is None:
+            now = time.time()
+            if now - self._diag_t > 5:
+                self._diag_t = now
+                log.debug("No array: pointers=%s key=%s", [hex(x) if x else x for x in ptrs],
+                          None if key is None else hex(key))
             return None
         total = STRIDE * (MAX_SLOTS - 1) + OFF_SIZE + 2
         blob = g.read(arr, total)                      # one syscall for the whole array
@@ -883,9 +933,24 @@ class Reader(threading.Thread):
             if mx <= 0 or cur < -1 or cur > mx + 1:
                 continue
             size = struct.unpack_from("<H", blk, OFF_SIZE)[0]
-            out.append({"slot": slot, "id": blk[OFF_ID], "cur": max(cur, 0), "max": mx,
-                        "size": size if 10 <= size <= 400 else None})
-        return out
+            size = size if 10 <= size <= 400 else None
+            mid = blk[OFF_ID]
+            info = self.monsters.get(mid)
+            if mid == 0 or (info is not None and info[3] and size is None):
+                continue                     # a large monster always has a size: this slot is stale / garbage
+            if info is None and size is None:
+                continue
+            out.append({"slot": slot, "id": mid, "cur": max(cur, 0), "max": mx, "size": size})
+        # an entry is trusted after it looked valid in two reads in a row (filters one-off garbage)
+        seen = {}
+        stable = []
+        for m in out:
+            k = (m["slot"], m["id"])
+            seen[k] = self._seen.get(k, 0) + 1
+            if seen[k] >= 2:
+                stable.append(m)
+        self._seen = seen
+        return stable
 
     def _set(self, status, monsters=()):
         monsters = list(monsters)
@@ -916,10 +981,18 @@ class Reader(threading.Thread):
                     log.info("Attached to %s pid=%s mhfo base=0x%X size=0x%X", TARGET_PROC, self.g.pid,
                              self.g.mhfo[0], self.g.mhfo[1])
                 mons = self.read_monsters()
-                if mons is None:
-                    self._set("game running, no quest")
-                else:
+                now = time.time()
+                if mons:
+                    self._good, self._good_t = mons, now
                     self._set("ok", mons)
+                elif self._good and now - self._good_t < HOLD_SECONDS:
+                    self._set("ok", self._good)          # short glitch: keep showing the last good list
+                else:
+                    self._good = []
+                    if mons is None:
+                        self._set("game running, no quest")
+                    else:
+                        self._set("ok", [])
                 if self.debug:
                     print(self.state)
             except Exception as e:
@@ -963,6 +1036,7 @@ class OverlayWindow:
         self._fonts = {}
         self._last_origin = "unset"
         self._last_status = None
+        self._last_fg = None
         self.hide_until = 0.0
         self.shot = KeyWatcher() if os.name == "nt" else None
         self.root = tk.Tk()
@@ -1202,10 +1276,15 @@ class OverlayWindow:
         if not s.enabled or (s.hide_on_screenshot and time.time() < self.hide_until):
             self.hide()
             return
-        if (s.only_when_focused and not s.preview and self.reader is not None and self.reader.g.h
-                and not self.reader.g.foreground_ok()):
-            self.hide()
-            return
+        if not s.preview and self.reader is not None and self.reader.g.h:
+            kind = self.reader.g.foreground_kind()
+            if kind != self._last_fg:
+                log.info("Foreground window: %s", kind)
+                self._last_fg = kind
+            # never draw over the menu console / terminal; with only_when_focused also hide for every other app
+            if kind == "console" or (s.only_when_focused and kind != "game"):
+                self.hide()
+                return
         if s.preview or self.reader is None:
             state, status = DEMO_MONSTERS, "preview"
         else:

@@ -1,0 +1,636 @@
+2026-11-22 17:34:12.420 [INFO] [Thread-2 (console_thread)] ========================================================================
+2026-11-22 17:34:12.421 [INFO] [Thread-2 (console_thread)] Logging on (level=info). Python 3.14.3, C:\Python314\python.exe
+2026-11-22 17:34:14.106 [INFO] [Thread-2 (console_thread)] menu command: 's'
+2026-11-22 17:34:15.762 [INFO] [Thread-1] Monsters: slot 0 id 105 size 106% hp 6941/9500
+2026-11-22 17:34:15.784 [INFO] [MainThread] Game window origin: (145, 73, 1280, 720)
+2026-11-22 17:34:15.788 [INFO] [MainThread] Overlay shown, geometry 240x41+155+412
+2026-11-22 17:34:20.391 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 17:34:20.393 [INFO] [MainThread] Game window origin: None
+2026-11-22 17:34:20.396 [INFO] [MainThread] Overlay hidden
+2026-11-22 17:34:21.804 [INFO] [Thread-1] Monsters: slot 0 id 105 size 106% hp 6941/9500
+2026-11-22 17:34:21.814 [INFO] [MainThread] Game window origin: (145, 73, 1280, 720)
+2026-11-22 17:34:21.817 [INFO] [MainThread] Overlay shown, geometry 240x41+155+412
+2026-11-22 17:34:22.855 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 17:34:22.857 [INFO] [MainThread] Game window origin: None
+2026-11-22 17:34:22.858 [INFO] [MainThread] Overlay hidden
+2026-11-22 17:34:32.797 [INFO] [Thread-1] Monsters: slot 0 id 105 size 106% hp 6585/9500
+2026-11-22 17:34:32.808 [INFO] [MainThread] Game window origin: (145, 73, 1280, 720)
+2026-11-22 17:34:32.814 [INFO] [MainThread] Overlay shown, geometry 240x41+155+412
+2026-11-22 17:34:33.786 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 17:34:33.789 [INFO] [MainThread] Game window origin: None
+2026-11-22 17:34:33.790 [INFO] [MainThread] Overlay hidden
+2026-11-22 17:35:36.001 [INFO] [Thread-2 (console_thread)] menu command: 'i'
+2026-11-22 17:35:36.001 [INFO] [Thread-2 (console_thread)] Logging off
+2026-11-22 20:12:02.424 [INFO] [MainThread] ========================================================================
+2026-11-22 20:12:02.425 [INFO] [MainThread] Logging on (level=info). Python 3.14.3, C:\Python314\python.exe
+2026-11-22 20:12:02.425 [INFO] [MainThread] Starting; config=D:\Extra\Frontier\F5 my overlay\f5_overlay.ini monsters=109 style=lvdew
+2026-11-22 20:12:02.425 [INFO] [Thread-1] Reader thread started; waiting for mhf.exe
+2026-11-22 20:12:02.437 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:12:02.496 [INFO] [MainThread] Overlay window created: hwnd=0x19050A style=lvdew
+2026-11-22 20:12:02.497 [INFO] [MainThread] Overlay sees reader status: waiting for mhf.exe
+2026-11-22 20:12:02.497 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:12:22.609 [INFO] [Thread-1] Attached to mhf.exe pid=14604 mhfo base=0x12250000 size=0x5AB5000
+2026-11-22 20:12:22.610 [INFO] [Thread-1] Reader status: game running, no quest
+2026-11-22 20:12:22.638 [INFO] [MainThread] Overlay sees reader status: game running, no quest
+2026-11-22 20:12:47.416 [INFO] [Thread-1] Reader status: ok
+2026-11-22 20:12:47.416 [INFO] [Thread-1] Monsters: slot 0 id 10 size None% hp 25704/25704
+2026-11-22 20:12:47.424 [INFO] [MainThread] Overlay sees reader status: ok
+2026-11-22 20:17:24.555 [INFO] [Thread-1] Reader status: game running, no quest
+2026-11-22 20:17:24.555 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:17:24.575 [INFO] [MainThread] Overlay sees reader status: game running, no quest
+2026-11-22 20:17:29.599 [INFO] [Thread-1] Reader status: ok
+2026-11-22 20:17:29.599 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 11900/11900
+2026-11-22 20:17:29.615 [INFO] [MainThread] Overlay sees reader status: ok
+2026-11-22 20:17:29.616 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:17:29.622 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:17:29.629 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 11900/11900, slot 1 id 25 size 100% hp 240/240, slot 2 id 25 size 100% hp 240/240, slot 3 id 25 size 100% hp 240/240, slot 4 id 25 size 100% hp 240/240
+2026-11-22 20:17:50.467 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 11900/11900
+2026-11-22 20:17:50.681 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 11900/11900, slot 1 id 34 size 100% hp 209/209, slot 2 id 34 size 100% hp 209/209, slot 3 id 34 size 100% hp 209/209
+2026-11-22 20:18:11.914 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 11900/11900
+2026-11-22 20:18:12.037 [INFO] [Thread-1] Monsters: slot 0 id 56 size 100% hp 27990/27990, slot 1 id 56 size 100% hp 28867/28867, slot 3 id 13 size 100% hp 15600/15600
+2026-11-22 20:18:12.049 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:18:12.051 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:18:16.116 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 11899/11900
+2026-11-22 20:18:16.125 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:18:16.130 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:18:16.270 [INFO] [Thread-1] Monsters: slot 0 id 25 size 100% hp 28098/28098, slot 1 id 25 size 100% hp 28759/28759, slot 3 id 63 size 100% hp 15449/15449
+2026-11-22 20:18:16.298 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:18:16.299 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:18:50.278 [INFO] [Thread-1] Monsters: slot 0 id 25 size 100% hp 28098/28098, slot 1 id 25 size 100% hp 28759/28759
+2026-11-22 20:19:08.411 [INFO] [Thread-1] Monsters: slot 0 id 25 size 100% hp 28098/28098, slot 1 id 25 size 100% hp 28759/28759, slot 3 id 63 size 100% hp 15449/15449
+2026-11-22 20:19:40.080 [INFO] [Thread-1] Monsters: slot 0 id 25 size 100% hp 28098/28098, slot 3 id 63 size 100% hp 15449/15449
+2026-11-22 20:19:41.469 [INFO] [Thread-1] Monsters: slot 0 id 25 size 100% hp 28098/28098, slot 1 id 25 size 100% hp 28723/28759, slot 3 id 63 size 100% hp 15449/15449
+2026-11-22 20:19:57.121 [INFO] [Thread-1] Monsters: slot 0 id 25 size 100% hp 27954/28098, slot 3 id 63 size 100% hp 15449/15449
+2026-11-22 20:20:52.425 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 7801/11900, slot 2 id 25 size 100% hp 0/240, slot 4 id 63 size 100% hp 209/209
+2026-11-22 20:20:52.435 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:20:52.441 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:20:52.579 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:20:52.606 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:20:52.608 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:21:12.686 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 7660/11900, slot 2 id 25 size 100% hp 0/240, slot 4 id 63 size 100% hp 209/209
+2026-11-22 20:21:12.690 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:21:12.695 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:21:16.701 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:21:16.703 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:21:16.704 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:21:17.934 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 7585/11900, slot 4 id 63 size 100% hp 209/209
+2026-11-22 20:21:17.959 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:21:17.963 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:21:20.558 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:21:20.574 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:21:20.575 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:21:23.479 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 7427/11900, slot 4 id 63 size 100% hp 209/209
+2026-11-22 20:21:23.506 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:21:23.509 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:21:24.801 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:21:24.803 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:21:24.804 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:21:25.631 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 7427/11900, slot 4 id 63 size 100% hp 209/209
+2026-11-22 20:21:25.652 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:21:25.654 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:21:26.928 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:21:26.949 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:21:26.950 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:21:28.283 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 7143/11900, slot 4 id 63 size 100% hp 209/209
+2026-11-22 20:21:28.293 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:21:28.297 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:21:30.534 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:21:30.544 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:21:30.546 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:21:31.121 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 7056/11900, slot 4 id 63 size 100% hp 209/209
+2026-11-22 20:21:31.139 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:21:31.142 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:21:31.828 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:21:31.846 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:21:31.848 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:21:36.859 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 7056/11900, slot 4 id 63 size 100% hp 209/209
+2026-11-22 20:21:36.882 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:21:36.885 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:21:39.144 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:21:39.163 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:21:39.164 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:21:39.699 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 7056/11900, slot 4 id 63 size 100% hp 0/209
+2026-11-22 20:21:39.719 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:21:39.722 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:21:40.378 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:21:40.388 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:21:40.390 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:21:41.795 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 7056/11900, slot 4 id 63 size 100% hp 0/209
+2026-11-22 20:21:41.795 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:21:41.800 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:21:42.876 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:21:42.900 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:21:42.901 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:21:44.173 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 7056/11900, slot 4 id 63 size 100% hp 0/209
+2026-11-22 20:21:44.180 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:21:44.183 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:21:51.543 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:21:51.572 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:21:51.573 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:22:02.337 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 6135/11900, slot 4 id 63 size 100% hp 209/209
+2026-11-22 20:22:02.364 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:22:02.369 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:22:03.020 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:22:03.041 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:22:03.042 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:22:09.342 [INFO] [Thread-1] Monsters: slot 0 id 3 size None% hp 10113/17913
+2026-11-22 20:22:11.407 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:22:19.178 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 5992/11900, slot 4 id 63 size 100% hp 209/209
+2026-11-22 20:22:19.182 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:22:19.187 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:22:19.857 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:22:19.881 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:22:19.882 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:22:24.733 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 5983/11900, slot 4 id 63 size 100% hp 200/209
+2026-11-22 20:22:24.751 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:22:24.756 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:22:25.287 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:22:25.295 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:22:25.296 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:22:29.494 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 5953/11900, slot 4 id 63 size 100% hp 200/209
+2026-11-22 20:22:29.513 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:22:29.518 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:22:30.202 [INFO] [Thread-1] Monsters: slot 3 id 13 size None% hp 14342/14342
+2026-11-22 20:22:30.214 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:22:30.216 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:22:31.743 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:22:36.585 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 5953/11900, slot 4 id 63 size 100% hp 199/209
+2026-11-22 20:22:36.605 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:22:36.606 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:22:37.385 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:22:37.386 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:22:37.387 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:22:40.959 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 5933/11900, slot 4 id 63 size 100% hp 173/209
+2026-11-22 20:22:40.972 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:22:40.977 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:22:42.505 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:22:42.514 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:22:42.515 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:22:46.425 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 5933/11900, slot 4 id 63 size 100% hp 173/209
+2026-11-22 20:22:46.440 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:22:46.443 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:22:47.104 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:22:47.126 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:22:47.127 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:22:52.006 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 5774/11900, slot 4 id 63 size 100% hp 113/209
+2026-11-22 20:22:52.032 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:22:52.035 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:22:52.438 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:22:52.439 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:22:52.440 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:22:58.052 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 5774/11900, slot 4 id 63 size 100% hp 0/209
+2026-11-22 20:22:58.052 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:22:58.054 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:23:02.275 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:23:02.282 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:23:02.283 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:23:07.794 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 4935/11900, slot 4 id 63 size 100% hp 0/209
+2026-11-22 20:23:07.805 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:23:07.810 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:23:09.770 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:23:09.789 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:23:09.790 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:23:12.425 [INFO] [Thread-1] Monsters: slot 3 id 13 size None% hp 14342/14342, slot 4 id 13 size None% hp 1166/1166
+2026-11-22 20:23:14.708 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:23:15.974 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 4821/11900
+2026-11-22 20:23:15.986 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:23:15.991 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:23:17.945 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:23:17.954 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:23:17.955 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:23:20.295 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 4631/11900
+2026-11-22 20:23:20.323 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:23:20.327 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:23:21.715 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:23:21.744 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:23:21.745 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:23:22.947 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 4621/11900
+2026-11-22 20:23:22.977 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:23:22.983 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:23:28.004 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:23:28.015 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:23:28.016 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:23:29.234 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 4333/11900
+2026-11-22 20:23:29.263 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:23:29.267 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:23:35.008 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:23:35.021 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:23:35.023 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:23:36.487 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 4184/11900
+2026-11-22 20:23:36.517 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:23:36.522 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:23:40.250 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:23:40.265 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:23:40.266 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:23:41.084 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 4126/11900
+2026-11-22 20:23:41.110 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:23:41.113 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:23:41.358 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:23:41.375 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:23:41.376 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:23:42.190 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 4126/11900
+2026-11-22 20:23:42.200 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:23:42.202 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:23:52.008 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:23:52.028 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:23:52.030 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:23:53.240 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 4096/11900
+2026-11-22 20:23:53.248 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:23:53.252 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:23:53.794 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:23:53.795 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:23:53.797 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:23:55.668 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 3514/11900
+2026-11-22 20:23:55.696 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:23:55.701 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:23:56.349 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:23:56.368 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:23:56.369 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:23:56.748 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 3350/11900
+2026-11-22 20:23:56.750 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:23:56.754 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:23:58.163 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:23:58.183 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:23:58.184 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:24:09.847 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 3295/11900
+2026-11-22 20:24:09.860 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:24:09.864 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:24:10.587 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:24:10.591 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:24:10.592 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:24:28.994 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 3265/11900, slot 1 id 34 size 100% hp 209/209, slot 2 id 34 size 100% hp 209/209, slot 3 id 34 size 100% hp 209/209
+2026-11-22 20:24:29.016 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:24:29.021 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:24:30.842 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:24:30.847 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:24:30.848 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:24:32.135 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 3265/11900, slot 1 id 34 size 100% hp 209/209, slot 2 id 34 size 100% hp 209/209, slot 3 id 34 size 100% hp 209/209
+2026-11-22 20:24:32.154 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:24:32.156 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:24:37.293 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:24:37.303 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:24:37.304 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:24:38.674 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 3245/11900, slot 1 id 34 size 100% hp 209/209, slot 2 id 34 size 100% hp 209/209, slot 3 id 34 size 100% hp 208/209
+2026-11-22 20:24:38.685 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:24:38.688 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:24:41.419 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:24:41.422 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:24:41.424 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:24:42.777 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 3235/11900, slot 1 id 34 size 100% hp 209/209, slot 2 id 34 size 100% hp 209/209, slot 3 id 34 size 100% hp 208/209
+2026-11-22 20:24:42.806 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:24:42.809 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:24:45.489 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:24:45.510 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:24:45.511 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:25:01.105 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 3178/11900, slot 1 id 19 size 100% hp 50/50, slot 2 id 19 size 100% hp 50/50
+2026-11-22 20:25:01.118 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:25:01.124 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:25:10.515 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:25:10.530 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:25:10.531 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:25:13.968 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 3074/11900, slot 1 id 19 size 100% hp 50/50, slot 2 id 19 size 100% hp 50/50
+2026-11-22 20:25:13.995 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:25:14.002 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:25:14.647 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:25:14.650 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:25:14.652 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:25:15.912 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 3059/11900, slot 1 id 19 size 100% hp 50/50, slot 2 id 19 size 100% hp 50/50
+2026-11-22 20:25:15.931 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:25:15.933 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:25:21.997 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:25:22.017 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:25:22.018 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:25:23.292 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 2981/11900, slot 1 id 19 size 100% hp 50/50, slot 2 id 19 size 100% hp 50/50
+2026-11-22 20:25:23.311 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:25:23.314 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:25:44.940 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:25:44.940 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:25:44.942 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:25:52.532 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 2558/11900, slot 1 id 19 size 100% hp 5/50, slot 2 id 19 size 100% hp 50/50
+2026-11-22 20:25:52.555 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:25:52.559 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:25:57.340 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:25:57.341 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:25:57.343 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:26:00.051 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 2463/11900, slot 1 id 19 size 100% hp 5/50, slot 2 id 19 size 100% hp 50/50
+2026-11-22 20:26:00.057 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:26:00.061 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:26:01.408 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:26:01.410 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:26:01.411 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:26:08.499 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 2430/11900, slot 1 id 19 size 100% hp 5/50, slot 2 id 19 size 100% hp 50/50
+2026-11-22 20:26:08.511 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:26:08.517 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:26:09.053 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:26:09.054 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:26:09.055 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:26:10.317 [INFO] [Thread-1] Monsters: slot 3 id 13 size None% hp 14342/14342
+2026-11-22 20:26:11.609 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:26:12.227 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 2407/11900, slot 1 id 19 size 100% hp 5/50, slot 2 id 19 size 100% hp 50/50
+2026-11-22 20:26:12.237 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:26:12.243 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:26:12.940 [INFO] [Thread-1] Monsters: slot 3 id 13 size None% hp 14342/14342
+2026-11-22 20:26:12.969 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:26:12.970 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:26:15.467 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 2378/11900, slot 1 id 19 size 100% hp 5/50, slot 2 id 19 size 100% hp 50/50
+2026-11-22 20:26:15.493 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:26:15.498 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:26:16.146 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:26:16.163 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:26:16.164 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:26:17.224 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 2368/11900, slot 1 id 19 size 100% hp 5/50, slot 2 id 19 size 100% hp 50/50
+2026-11-22 20:26:17.225 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:26:17.230 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:26:19.076 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:26:19.083 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:26:19.084 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:26:20.555 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 2259/11900, slot 1 id 19 size 100% hp 0/50, slot 2 id 19 size 100% hp 50/50
+2026-11-22 20:26:20.586 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:26:20.591 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:26:39.458 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:26:39.486 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:26:39.486 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:26:41.431 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 1801/11900, slot 1 id 19 size 100% hp 30/50, slot 2 id 19 size 100% hp 50/50
+2026-11-22 20:26:41.451 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:26:41.455 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:26:45.070 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:26:45.077 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:26:45.078 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:26:46.274 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 1516/11900, slot 1 id 19 size 100% hp 30/50, slot 2 id 19 size 100% hp 50/50
+2026-11-22 20:26:46.275 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:26:46.280 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:26:48.806 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:26:48.819 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:26:48.820 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:26:56.765 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 1105/11900, slot 1 id 19 size 100% hp 30/50, slot 2 id 19 size 100% hp 50/50
+2026-11-22 20:26:56.790 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:26:56.796 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:27:01.206 [INFO] [Thread-1] Monsters: slot 0 id 3 size None% hp 10126/17913
+2026-11-22 20:27:01.232 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:27:01.233 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:27:02.255 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:27:10.551 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 1057/11900, slot 1 id 19 size 100% hp 30/50, slot 2 id 19 size 100% hp 50/50
+2026-11-22 20:27:10.569 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:27:10.575 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:27:12.214 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:27:12.215 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:27:12.215 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:27:13.510 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 1040/11900, slot 1 id 19 size 100% hp 30/50, slot 2 id 19 size 100% hp 50/50
+2026-11-22 20:27:13.527 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:27:13.530 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:27:14.929 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:27:14.944 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:27:14.945 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:27:16.994 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 980/11900, slot 1 id 19 size 100% hp 30/50, slot 2 id 19 size 100% hp 50/50
+2026-11-22 20:27:16.996 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:27:17.000 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:27:18.322 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:27:18.345 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:27:18.346 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:27:20.512 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 936/11900, slot 1 id 19 size 100% hp 30/50, slot 2 id 19 size 100% hp 50/50
+2026-11-22 20:27:20.528 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:27:20.530 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:27:21.007 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:27:21.013 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:27:21.014 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:27:23.008 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 926/11900, slot 1 id 19 size 100% hp 30/50, slot 2 id 19 size 100% hp 50/50
+2026-11-22 20:27:23.036 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:27:23.040 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:27:28.284 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:27:28.287 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:27:28.288 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:27:28.932 [INFO] [Thread-1] Monsters: slot 0 id 3 size None% hp 10164/17913
+2026-11-22 20:27:31.030 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:27:36.702 [INFO] [Thread-1] Monsters: slot 0 id 3 size None% hp 10160/17913
+2026-11-22 20:27:38.743 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:27:44.878 [INFO] [Thread-1] Monsters: slot 0 id 3 size None% hp 10161/17913
+2026-11-22 20:27:47.496 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:28:08.369 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 642/11900, slot 1 id 34 size 100% hp 207/209, slot 2 id 34 size 100% hp 209/209, slot 3 id 34 size 100% hp 20/209
+2026-11-22 20:28:08.400 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:28:08.405 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:28:15.025 [INFO] [Thread-1] Monsters: slot 0 id 10 size None% hp 713/4667
+2026-11-22 20:28:15.035 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:28:15.036 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:28:15.884 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:28:16.192 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 596/11900, slot 1 id 34 size 100% hp 207/209, slot 2 id 34 size 100% hp 209/209, slot 3 id 34 size 100% hp 19/209
+2026-11-22 20:28:16.222 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:28:16.224 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:28:17.304 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:28:17.306 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:28:17.307 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:28:17.891 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 596/11900, slot 1 id 34 size 100% hp 207/209, slot 2 id 34 size 100% hp 209/209, slot 3 id 34 size 100% hp 19/209
+2026-11-22 20:28:17.904 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:28:17.907 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:28:18.601 [INFO] [Thread-1] Monsters: slot 1 id 34 size 100% hp 28790/28790
+2026-11-22 20:28:18.623 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:28:18.624 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:28:19.248 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 300/11900, slot 1 id 34 size 100% hp 205/209, slot 2 id 34 size 100% hp 208/209, slot 3 id 34 size 100% hp 19/209
+2026-11-22 20:28:19.278 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:28:19.281 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:28:19.960 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:28:19.982 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:28:19.984 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:28:22.180 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 249/11900, slot 1 id 34 size 100% hp 204/209, slot 2 id 34 size 100% hp 208/209, slot 3 id 34 size 100% hp 19/209
+2026-11-22 20:28:22.197 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:28:22.201 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:28:22.674 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:28:22.679 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:28:22.680 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:28:23.938 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 249/11900, slot 1 id 34 size 100% hp 204/209, slot 2 id 34 size 100% hp 208/209, slot 3 id 34 size 100% hp 19/209
+2026-11-22 20:28:23.962 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:28:23.965 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:28:25.575 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:28:25.596 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:28:25.597 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:28:26.934 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 249/11900, slot 1 id 34 size 100% hp 204/209, slot 2 id 34 size 100% hp 208/209, slot 3 id 34 size 100% hp 19/209
+2026-11-22 20:28:26.937 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:28:26.940 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:28:27.427 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:28:27.452 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:28:27.453 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:28:28.692 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 249/11900, slot 1 id 34 size 100% hp 204/209, slot 2 id 34 size 100% hp 208/209, slot 3 id 34 size 100% hp 19/209
+2026-11-22 20:28:28.698 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:28:28.701 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:28:29.865 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:28:29.896 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:28:29.897 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:28:34.105 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 239/11900, slot 1 id 34 size 100% hp 204/209, slot 2 id 34 size 100% hp 207/209, slot 3 id 34 size 100% hp 19/209
+2026-11-22 20:28:34.128 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:28:34.133 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:28:35.926 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:28:35.952 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:28:35.953 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:28:37.317 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 239/11900, slot 1 id 34 size 100% hp 204/209, slot 2 id 34 size 100% hp 207/209, slot 3 id 34 size 100% hp 19/209
+2026-11-22 20:28:37.325 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:28:37.327 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:28:49.713 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:28:49.713 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:28:49.714 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:28:50.547 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 48/11900, slot 1 id 34 size 100% hp 204/209, slot 2 id 34 size 100% hp 0/209, slot 3 id 34 size 100% hp 19/209
+2026-11-22 20:28:50.555 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:28:50.558 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:28:51.040 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:28:51.066 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:28:51.067 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:28:52.273 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 48/11900, slot 1 id 34 size 100% hp 204/209, slot 2 id 34 size 100% hp 0/209, slot 3 id 34 size 100% hp 19/209
+2026-11-22 20:28:52.279 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:28:52.282 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:28:56.124 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:28:56.144 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:28:56.145 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:29:48.721 [INFO] [Thread-1] Monsters: slot 0 id 14 size 106% hp 0/11900, slot 1 id 34 size 100% hp 201/209, slot 3 id 34 size 100% hp 18/209
+2026-11-22 20:29:48.747 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:29:48.750 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:30:40.288 [INFO] [Thread-1] Reader status: game running, no quest
+2026-11-22 20:30:40.288 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:30:40.292 [INFO] [MainThread] Overlay sees reader status: game running, no quest
+2026-11-22 20:30:40.292 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:30:40.293 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:30:44.090 [INFO] [Thread-1] Reader status: ok
+2026-11-22 20:30:44.100 [INFO] [MainThread] Overlay sees reader status: ok
+2026-11-22 20:36:41.282 [INFO] [Thread-1] Reader status: game running, no quest
+2026-11-22 20:36:41.288 [INFO] [MainThread] Overlay sees reader status: game running, no quest
+2026-11-22 20:36:41.313 [INFO] [Thread-1] Reader status: ok
+2026-11-22 20:36:41.320 [INFO] [MainThread] Overlay sees reader status: ok
+2026-11-22 20:38:26.090 [INFO] [Thread-1] Reader status: game running, no quest
+2026-11-22 20:38:26.113 [INFO] [MainThread] Overlay sees reader status: game running, no quest
+2026-11-22 20:38:30.553 [INFO] [Thread-1] Reader status: ok
+2026-11-22 20:38:30.553 [INFO] [Thread-1] Monsters: slot 0 id 14 size 93% hp 11900/11900
+2026-11-22 20:38:30.580 [INFO] [MainThread] Overlay sees reader status: ok
+2026-11-22 20:38:30.580 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 20:38:30.584 [INFO] [Thread-1] Monsters: slot 0 id 14 size 93% hp 11900/11900, slot 1 id 25 size 100% hp 240/240, slot 2 id 25 size 100% hp 240/240, slot 3 id 25 size 100% hp 240/240, slot 4 id 25 size 100% hp 240/240
+2026-11-22 20:38:30.584 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 20:39:00.662 [INFO] [Thread-1] Monsters: slot 0 id 14 size 93% hp 11900/11900
+2026-11-22 20:39:00.846 [INFO] [Thread-1] Monsters: slot 0 id 14 size 93% hp 11900/11900, slot 1 id 34 size 100% hp 209/209, slot 2 id 34 size 100% hp 209/209, slot 3 id 34 size 100% hp 209/209
+2026-11-22 20:39:10.276 [INFO] [Thread-1] Monsters: slot 0 id 14 size 93% hp 11900/11900
+2026-11-22 20:39:10.401 [INFO] [Thread-1] Monsters: slot 0 id 14 size 93% hp 11900/11900, slot 1 id 56 size 100% hp 100/100, slot 2 id 56 size 100% hp 100/100, slot 3 id 13 size 100% hp 120/120, slot 4 id 13 size 100% hp 120/120, slot 5 id 13 size 100% hp 120/120
+2026-11-22 20:39:14.509 [INFO] [Thread-1] Monsters: slot 0 id 14 size 93% hp 11900/11900
+2026-11-22 20:39:14.664 [INFO] [Thread-1] Monsters: slot 0 id 14 size 93% hp 11900/11900, slot 1 id 25 size 100% hp 240/240, slot 2 id 25 size 100% hp 240/240, slot 3 id 25 size 100% hp 240/240, slot 4 id 63 size 100% hp 209/209, slot 5 id 63 size 100% hp 209/209
+2026-11-22 20:41:13.297 [INFO] [Thread-1] Monsters: slot 0 id 14 size 93% hp 9151/11900, slot 1 id 25 size 100% hp 240/240, slot 2 id 25 size 100% hp 0/240, slot 3 id 25 size 100% hp 0/240, slot 4 id 63 size 100% hp 0/209
+2026-11-22 20:42:03.464 [INFO] [Thread-1] Monsters: slot 0 id 14 size 93% hp 7863/11900, slot 1 id 25 size 100% hp 0/240, slot 2 id 25 size 100% hp 0/240, slot 4 id 63 size 100% hp 189/209
+2026-11-22 20:42:20.392 [INFO] [Thread-1] Monsters: slot 0 id 14 size 93% hp 7440/11900, slot 1 id 25 size 100% hp 0/240, slot 4 id 63 size 100% hp 0/209
+2026-11-22 20:42:33.373 [INFO] [Thread-1] Monsters: slot 0 id 14 size 93% hp 6995/11900, slot 1 id 25 size 100% hp 0/240
+2026-11-22 20:42:48.919 [INFO] [Thread-1] Monsters: slot 0 id 14 size 93% hp 6913/11900
+2026-11-22 20:46:34.928 [INFO] [Thread-1] Monsters: slot 0 id 14 size 93% hp 1499/11900, slot 1 id 19 size 100% hp 50/50
+2026-11-22 20:46:44.036 [INFO] [Thread-1] Monsters: slot 0 id 14 size 93% hp 1499/11900
+2026-11-22 20:46:44.282 [INFO] [Thread-1] Monsters: slot 0 id 34 size 100% hp 29633/29633, slot 2 id 34 size 100% hp 8198/8198
+2026-11-22 20:46:44.312 [INFO] [MainThread] Game window origin: None
+2026-11-22 20:46:44.313 [INFO] [MainThread] Overlay hidden
+2026-11-22 20:47:00.937 [INFO] [Thread-1] Monsters: slot 0 id 34 size 100% hp 29633/29633
+2026-11-22 20:50:12.747 [INFO] [Thread-1] Reader status: game running, no quest
+2026-11-22 20:50:12.747 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 20:50:12.755 [INFO] [MainThread] Overlay sees reader status: game running, no quest
+2026-11-22 20:50:16.525 [INFO] [Thread-1] Reader status: ok
+2026-11-22 20:50:16.525 [INFO] [Thread-1] Monsters: slot 0 id 10 size None% hp 20799/20799
+2026-11-22 20:50:16.540 [INFO] [MainThread] Overlay sees reader status: ok
+2026-11-22 21:04:43.874 [INFO] [Thread-1] Reader status: game running, no quest
+2026-11-22 21:04:43.874 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 21:04:43.902 [INFO] [MainThread] Overlay sees reader status: game running, no quest
+2026-11-22 21:04:49.324 [INFO] [Thread-1] Reader status: ok
+2026-11-22 21:04:49.325 [INFO] [Thread-1] Monsters: slot 0 id 45 size 104% hp 5400/5400
+2026-11-22 21:04:49.349 [INFO] [MainThread] Overlay sees reader status: ok
+2026-11-22 21:04:49.349 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 21:04:49.353 [INFO] [MainThread] Overlay shown, geometry 240x41+129+407
+2026-11-22 21:05:00.054 [INFO] [Thread-1] Monsters: slot 0 id 45 size 104% hp 5400/5400, slot 1 id 12 size 100% hp 69/69, slot 2 id 12 size 100% hp 69/69, slot 3 id 12 size 100% hp 69/69, slot 4 id 19 size 100% hp 28/28
+2026-11-22 21:05:18.726 [INFO] [Thread-1] Monsters: slot 0 id 45 size 104% hp 5400/5400
+2026-11-22 21:05:18.851 [INFO] [Thread-1] Monsters: slot 0 id 45 size 104% hp 5400/5400, slot 1 id 10 size 100% hp 200/200
+2026-11-22 21:05:22.891 [INFO] [Thread-1] Monsters: slot 0 id 45 size 104% hp 5400/5400
+2026-11-22 21:05:23.045 [INFO] [Thread-1] Monsters: slot 0 id 45 size 104% hp 5400/5400, slot 1 id 12 size 100% hp 69/69, slot 2 id 12 size 100% hp 69/69, slot 3 id 19 size 100% hp 28/28
+2026-11-22 21:05:41.785 [INFO] [Thread-2 (console_thread)] menu command: '>'
+2026-11-22 21:05:54.696 [INFO] [Thread-2 (console_thread)] menu command: 'b 180'
+2026-11-22 21:05:57.848 [INFO] [Thread-2 (console_thread)] menu command: 's'
+2026-11-22 21:07:09.888 [INFO] [Thread-1] Monsters: slot 0 id 45 size 104% hp 5400/5400, slot 2 id 12 size 100% hp 0/69, slot 3 id 19 size 100% hp 28/28
+2026-11-22 21:07:11.613 [INFO] [Thread-1] Monsters: slot 0 id 45 size 104% hp 5400/5400, slot 3 id 19 size 100% hp 28/28
+2026-11-22 21:11:06.443 [INFO] [Thread-1] Reader status: game running, no quest
+2026-11-22 21:11:06.443 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 21:11:06.452 [INFO] [MainThread] Overlay sees reader status: game running, no quest
+2026-11-22 21:11:06.452 [INFO] [MainThread] Game window origin: None
+2026-11-22 21:11:06.453 [INFO] [MainThread] Overlay hidden
+2026-11-22 21:11:10.779 [INFO] [Thread-1] Reader status: ok
+2026-11-22 21:11:10.780 [INFO] [Thread-1] Monsters: slot 0 id 10 size None% hp 20010/20010
+2026-11-22 21:11:10.784 [INFO] [MainThread] Overlay sees reader status: ok
+2026-11-22 21:13:14.307 [INFO] [Thread-1] Reader status: game running, no quest
+2026-11-22 21:13:14.307 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 21:13:14.330 [INFO] [MainThread] Overlay sees reader status: game running, no quest
+2026-11-22 21:13:19.657 [INFO] [Thread-1] Reader status: ok
+2026-11-22 21:13:19.657 [INFO] [Thread-1] Monsters: slot 0 id 45 size 122% hp 5400/5400
+2026-11-22 21:13:19.659 [INFO] [MainThread] Overlay sees reader status: ok
+2026-11-22 21:13:19.659 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 21:13:19.663 [INFO] [MainThread] Overlay shown, geometry 180x41+130+407
+2026-11-22 21:13:42.186 [INFO] [Thread-1] Monsters: slot 0 id 45 size 122% hp 5400/5400, slot 1 id 12 size 100% hp 69/69, slot 2 id 12 size 100% hp 69/69, slot 3 id 19 size 100% hp 28/28
+2026-11-22 21:15:15.881 [INFO] [Thread-1] Monsters: slot 0 id 45 size 122% hp 5400/5400, slot 2 id 12 size 100% hp 0/69, slot 3 id 19 size 100% hp 28/28
+2026-11-22 21:15:20.695 [INFO] [Thread-1] Monsters: slot 0 id 45 size 122% hp 5400/5400, slot 3 id 19 size 100% hp 0/28
+2026-11-22 21:19:40.863 [INFO] [Thread-2 (console_thread)] menu command: 'q'
+2026-11-22 21:19:40.879 [INFO] [MainThread] Closed
+2026-11-22 21:19:54.131 [INFO] [MainThread] ========================================================================
+2026-11-22 21:19:54.131 [INFO] [MainThread] Logging on (level=info). Python 3.14.3, C:\Python314\python.exe
+2026-11-22 21:19:54.132 [INFO] [MainThread] Starting; config=D:\Extra\Frontier\F5 my overlay\f5_overlay.ini monsters=109 style=lvdew
+2026-11-22 21:19:54.132 [INFO] [Thread-1] Reader thread started; waiting for mhf.exe
+2026-11-22 21:19:54.143 [INFO] [Thread-1] Attached to mhf.exe pid=14604 mhfo base=0x12250000 size=0x5AB5000
+2026-11-22 21:19:54.144 [INFO] [Thread-1] Reader status: ok
+2026-11-22 21:19:54.196 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 21:19:54.206 [INFO] [MainThread] Overlay window created: hwnd=0x660B76 style=lvdew
+2026-11-22 21:19:54.213 [INFO] [MainThread] Foreground window: console
+2026-11-22 21:19:54.227 [INFO] [Thread-1] Monsters: slot 0 id 45 size 122% hp 0/5400, slot 3 id 19 size 100% hp 28/28
+2026-11-22 21:19:54.536 [INFO] [MainThread] Foreground window: other
+2026-11-22 21:19:54.536 [INFO] [MainThread] Overlay sees reader status: ok
+2026-11-22 21:19:54.537 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 21:19:54.540 [INFO] [MainThread] Overlay shown, geometry 180x41+130+407
+2026-11-22 21:19:54.645 [INFO] [MainThread] Foreground window: game
+2026-11-22 21:20:08.287 [INFO] [Thread-1] Reader status: game running, no quest
+2026-11-22 21:20:08.287 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 21:20:08.302 [INFO] [MainThread] Overlay sees reader status: game running, no quest
+2026-11-22 21:20:08.302 [INFO] [MainThread] Game window origin: None
+2026-11-22 21:20:08.303 [INFO] [MainThread] Overlay hidden
+2026-11-22 21:20:10.349 [INFO] [Thread-1] Reader status: ok
+2026-11-22 21:20:10.361 [INFO] [MainThread] Overlay sees reader status: ok
+2026-11-22 21:20:10.379 [INFO] [Thread-1] Monsters: slot 0 id 10 size None% hp 22456/22456
+2026-11-22 21:20:23.379 [INFO] [MainThread] Foreground window: other
+2026-11-22 21:20:23.441 [INFO] [MainThread] Foreground window: console
+2026-11-22 21:20:27.503 [INFO] [Thread-2 (console_thread)] menu command: '4'
+2026-11-22 21:20:28.799 [INFO] [Thread-2 (console_thread)] menu command: '5'
+2026-11-22 21:20:34.967 [INFO] [Thread-2 (console_thread)] menu command: 'j'
+2026-11-22 21:20:36.379 [INFO] [MainThread] Foreground window: game
+2026-11-22 21:20:38.035 [INFO] [MainThread] Foreground window: other
+2026-11-22 21:20:38.161 [INFO] [MainThread] Foreground window: console
+2026-11-22 21:20:40.959 [INFO] [Thread-2 (console_thread)] menu command: 'j'
+2026-11-22 21:20:55.106 [INFO] [MainThread] Foreground window: game
+2026-11-22 21:20:56.735 [INFO] [MainThread] Foreground window: other
+2026-11-22 21:20:58.982 [INFO] [MainThread] Foreground window: game
+2026-11-22 21:21:53.241 [INFO] [Thread-1] Reader status: game running, no quest
+2026-11-22 21:21:53.241 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 21:21:53.266 [INFO] [MainThread] Overlay sees reader status: game running, no quest
+2026-11-22 21:21:55.966 [INFO] [Thread-1] Reader status: ok
+2026-11-22 21:21:55.974 [INFO] [MainThread] Overlay sees reader status: ok
+2026-11-22 21:21:55.997 [INFO] [Thread-1] Monsters: slot 0 id 45 size 104% hp 5400/5400
+2026-11-22 21:21:56.004 [INFO] [MainThread] Game window origin: (119, 68, 1280, 720)
+2026-11-22 21:21:56.009 [INFO] [MainThread] Overlay shown, geometry 180x41+130+407
+2026-11-22 21:22:10.803 [INFO] [Thread-1] Monsters: slot 0 id 45 size 104% hp 5400/5400, slot 1 id 12 size 100% hp 69/69, slot 2 id 12 size 100% hp 72/72, slot 3 id 19 size 100% hp 28/28
+2026-11-22 21:22:23.841 [INFO] [MainThread] Foreground window: other
+2026-11-22 21:22:24.681 [INFO] [MainThread] Foreground window: console
+2026-11-22 21:22:24.683 [INFO] [MainThread] Overlay hidden
+2026-11-22 21:22:28.398 [INFO] [Thread-2 (console_thread)] menu command: '4'
+2026-11-22 21:22:30.583 [INFO] [Thread-2 (console_thread)] menu command: '3'
+2026-11-22 21:22:31.630 [INFO] [Thread-2 (console_thread)] menu command: '2'
+2026-11-22 21:22:33.406 [INFO] [Thread-2 (console_thread)] menu command: '1'
+2026-11-22 21:22:35.846 [INFO] [Thread-2 (console_thread)] menu command: 'm'
+2026-11-22 21:22:36.122 [INFO] [Thread-1] Monsters: slot 0 id 45 size 104% hp 5400/5400, slot 2 id 12 size 100% hp 0/72, slot 3 id 19 size 100% hp 28/28
+2026-11-22 21:22:36.742 [INFO] [MainThread] Foreground window: game
+2026-11-22 21:22:36.748 [INFO] [MainThread] Overlay shown, geometry 180x90+130+383
+2026-11-22 21:23:43.440 [INFO] [Thread-1] Monsters: slot 0 id 45 size 104% hp 5400/5400, slot 3 id 19 size 100% hp 28/28
+2026-11-22 21:27:53.859 [INFO] [MainThread] Foreground window: other
+2026-11-22 21:28:14.626 [INFO] [MainThread] Foreground window: console
+2026-11-22 21:28:14.627 [INFO] [MainThread] Overlay hidden
+2026-11-22 21:28:15.671 [INFO] [MainThread] Foreground window: game
+2026-11-22 21:28:15.673 [INFO] [MainThread] Overlay shown, geometry 180x90+130+383
+2026-11-22 21:28:17.695 [INFO] [MainThread] Foreground window: other
+2026-11-22 21:28:31.629 [INFO] [MainThread] Foreground window: game
+2026-11-22 21:28:43.882 [INFO] [Thread-1] Reader status: game running, no quest
+2026-11-22 21:28:43.882 [INFO] [Thread-1] Monsters: (none)
+2026-11-22 21:28:43.905 [INFO] [MainThread] Overlay sees reader status: game running, no quest
+2026-11-22 21:28:43.905 [INFO] [MainThread] Game window origin: None
+2026-11-22 21:28:43.907 [INFO] [MainThread] Overlay hidden
+2026-11-22 21:28:45.979 [INFO] [Thread-1] Reader status: ok
+2026-11-22 21:28:45.997 [INFO] [MainThread] Overlay sees reader status: ok
+2026-11-22 21:28:46.009 [INFO] [Thread-1] Monsters: slot 0 id 10 size None% hp 22492/22492
+2026-11-22 21:28:50.377 [INFO] [MainThread] Foreground window: other
