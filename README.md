@@ -189,3 +189,22 @@ cannot be detected.
 * Capture ranges and the large/small flag come from Lvdew's table (built in; a `Config.txt` next to the script overrides it).
 * If it says `error: ...` or does not attach, switch the log on and send me `f5_overlay.log`.
 * The overlay position follows the game window. It only works while the game is windowed or borderless.
+
+## Credits & Acknowledgements
+
+This project was made possible in part by the work, research, and ideas of other Monster Hunter community developers. Special thanks to:
+
+- **[Relial - MHFZ Monster Viewer](https://github.com/Relial/mhfz-monster-viewer)**  
+  Used as a reference and inspiration for displaying live monster information from Monster Hunter Frontier. The project focuses primarily on hitzone values (HZVs) and identifying monster information during hunts.
+
+- **[Alexander Lancellott - GitHub](https://github.com/Alexander-Lancellott)**  
+  Inspiration for the overlay's visual presentation and HP display, particularly the stacked-box style used in the Alexander layout. His work on Monster Hunter HP overlays provided a useful reference for presenting monster information clearly.
+
+- **Lvdew - Lvdew's MHF HP Display (Lvdew.exe, Revive2)**  
+  Reference for the original Monster Hunter Frontier HP overlay functionality. This project draws inspiration from Lvdew's HP display, monster data tables, capture-range highlighting, and `Config.txt` configuration format. The accompanying `ReadMe!!.txt` documents the Revive2 version, which supports the Season 8.0 client.
+
+### A note on attribution
+
+These projects are credited for their contributions, references, and inspiration. This overlay has been adapted and developed specifically for Monster Hunter Frontier Forward.5, with its own memory-reading implementation, size detection, crown display, configuration system, and other features.
+
+All credit for the original work belongs to its respective authors.
