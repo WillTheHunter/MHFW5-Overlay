@@ -46,7 +46,7 @@ import time
 TARGET_PROC = "mhf.exe"
 ARRAY_PTR_RVAS = (0x51E3378, 0x5725978)
 STRIDE = 0xD80
-HOLD_SECONDS = 2.0          # keep the last good monster list this long when a read comes back empty
+HOLD_SECONDS = 5.0          # keep the last good monster list this long when a read comes back empty
 MAX_SLOTS = 40
 TABLE_RVA = 0x57D9AEE
 KEY_RVA = 0xC6F714
@@ -888,6 +888,8 @@ class Reader(threading.Thread):
         self._good = []              # last list that was shown
         self._good_t = 0.0
         self._diag_t = 0.0
+        self._arr = None             # last array address that held live monsters
+        self.why = ""                # reason of the last empty read (goes into the log)
 
     def read_monsters(self):
         g = self.g
@@ -903,21 +905,27 @@ class Reader(threading.Thread):
                 if g.read(p, 2) == b"\x01\x01":
                     arr = p
                 break
+        if arr is None and self._arr and g.read(self._arr, 2) == b"\x01\x01":
+            arr = self._arr                            # pointer glitch: keep using the array that worked
+            self.why = "pointer %s unusable, using remembered array 0x%X" % (
+                [hex(x) if x else x for x in ptrs], arr)
         if arr is None or key is None:
-            now = time.time()
-            if now - self._diag_t > 5:
-                self._diag_t = now
-                log.debug("No array: pointers=%s key=%s", [hex(x) if x else x for x in ptrs],
-                          None if key is None else hex(key))
+            self.why = "no array: pointers=%s flags=%s key=%s" % (
+                [hex(x) if x else x for x in ptrs],
+                (g.read(ptrs[0], 2) or b"").hex() if ptrs and ptrs[0] else "-",
+                None if key is None else hex(key))
             return None
+        self._arr = arr
         total = STRIDE * (MAX_SLOTS - 1) + OFF_SIZE + 2
         blob = g.read(arr, total)                      # one syscall for the whole array
         if blob is not None and len(blob) < total:
             blob = None
         tbl = g.read(base + TABLE_RVA - 2 * (MAX_SLOTS - 1), 2 * MAX_SLOTS)   # all T values at once
         if tbl is None or len(tbl) < 2 * MAX_SLOTS:
+            self.why = "T table unreadable"
             return None
         out = []
+        rej = []
         need = OFF_SIZE + 2
         for slot in range(MAX_SLOTS):
             if blob is not None:
@@ -931,12 +939,14 @@ class Reader(threading.Thread):
             w2 = struct.unpack_from("<H", blk, OFF_MAX)[0]
             cur, mx = decode_hp(w1, w2, t, key)
             if mx <= 0 or cur < -1 or cur > mx + 1:
+                rej.append("slot %d id %d hp-decode %d/%d (key %X T %X)" % (slot, blk[OFF_ID], cur, mx, key, t))
                 continue
             size = struct.unpack_from("<H", blk, OFF_SIZE)[0]
             size = size if 10 <= size <= 400 else None
             mid = blk[OFF_ID]
             info = self.monsters.get(mid)
             if mid == 0 or (info is not None and info[3] and size is None):
+                rej.append("slot %d id %d no size (raw %d)" % (slot, mid, size or 0))
                 continue                     # a large monster always has a size: this slot is stale / garbage
             if info is None and size is None:
                 continue
@@ -950,6 +960,8 @@ class Reader(threading.Thread):
             if seen[k] >= 2:
                 stable.append(m)
         self._seen = seen
+        self.why = "array 0x%X read ok, %d valid, %d stable; rejected: %s" % (
+            arr, len(out), len(stable), "; ".join(rej[:4]) or "none")
         return stable
 
     def _set(self, status, monsters=()):
@@ -986,8 +998,13 @@ class Reader(threading.Thread):
                     self._good, self._good_t = mons, now
                     self._set("ok", mons)
                 elif self._good and now - self._good_t < HOLD_SECONDS:
+                    if now - self._diag_t > 0.5:
+                        self._diag_t = now
+                        log.info("Empty read, holding last list. Reason: %s", self.why)
                     self._set("ok", self._good)          # short glitch: keep showing the last good list
                 else:
+                    if self._good:
+                        log.warning("Monster list lost after %.1fs hold. Reason: %s", HOLD_SECONDS, self.why)
                     self._good = []
                     if mons is None:
                         self._set("game running, no quest")
