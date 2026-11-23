@@ -416,7 +416,6 @@ Windows and Tkinter allow only some transparency:
 - **Labin222** - tested the overlay, gave suggestions, helped with the tranq bomb icon.
 - **Claude (Anthropic)** - wrote the code and documentation together with Will: the memory reader, both overlay styles, the console menu, icons, auto-start and login, and the exe build.
 
-Want to be listed? Add your name and what you did to this section.
 
 ## Credits & Acknowledgements
 
