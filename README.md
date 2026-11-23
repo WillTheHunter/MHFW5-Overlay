@@ -11,7 +11,7 @@ For every monster it shows:
 - A skull (bones) icon when the monster is dead
 - Optionally small monsters too
 
-It has two visual styles, a console menu with six pages, an optional log, and can start the game for you and fill in the login fields.
+It also shows status build-ups (poison, paralysis, sleep, KO, tranquilizer), attack / defense multipliers and effective HP, ported from Relial's monster viewer. It has two visual styles, a console menu with eight pages, an optional log, and can start the game for you and fill in the login fields.
 
 ## Contents
 
@@ -20,7 +20,8 @@ It has two visual styles, a console menu with six pages, an optional log, and ca
 3. [Building a Windows executable](#building-a-windows-executable-exe)
 4. [The console menu](#the-console-menu)
 5. [Styles and icons](#styles-and-icons)
-6. [Starting the game with the overlay](#starting-the-game-with-the-overlay)
+6. [Status build-ups and what is not ported](#status-build-ups-multipliers-effective-hp-page-7)
+   - [Starting the game with the overlay](#starting-the-game-with-the-overlay)
 7. [f5_overlay.ini](#f5_overlayini)
 8. [Crowns](#crowns)
 9. [Colours and transparency](#colours-and-transparency)
@@ -108,7 +109,7 @@ op 80
 
 There are two views:
 
-- **Pages** (default): six pages of at most ten commands. `>` next page, `<` previous page, `1`-`6` jump to a page.
+- **Pages** (default): eight pages of at most ten commands. `>` next page, `<` previous page, `1`-`8` jump to a page.
 - **All options**: `0` (or `all`) lists every option in one list. `0`, `pages`, `>`, `<` or a page number goes back. The choice is saved as `menu_mode`.
 
 The console is cleared after every command (`cl` turns this off). `s` saves to the ini, `q` quits, Ctrl+C or closing the window also quits. A `-` means the option does not exist in the style that is selected.
@@ -183,6 +184,25 @@ An unknown colour name keeps the old colour and shows a warning.
 | `i` | Write a log file |
 | `u N` | Read / redraw interval in milliseconds (lower = faster) |
 
+### Page 7 - Status build-ups
+
+| Key | Description |
+|---|---|
+| `st` | Status mode: `off` / `active` (only above 0) / `all` |
+| `sp`, `sa`, `ss`, `sk`, `sq` | Poison, paralysis (para), sleep, KO, tranquilizer on / off |
+| `sm` | Attack / defense multiplier |
+| `se` | Effective HP |
+| `sv` | Always show every status (`-` = the monster has no such status) |
+
+### Page 8 - Quest timers and window
+
+| Key | Description |
+|---|---|
+| `tm` | Quest timer on / off |
+| `td` | Quest timer counts `up` (elapsed, like `!timer`) or `down` (time left) |
+| `cm` | Carving countdown after the quest on / off |
+| `ot` | Overlay stacking: `game` (only above the game window) or `always` (on top of everything) |
+
 ### Page 6 - Icons and starting the game
 
 | Key | Description |
@@ -235,6 +255,35 @@ Switch with `t` or `style` in the ini.
 
 The five icons are built into the script (base64 PNG, six sizes each), so nothing has to be copied next to the script or exe. They were supplied by William and upscaled with Upscayl; the artwork belongs to its respective owners.
 
+## Status build-ups, multipliers, effective HP
+
+Ported from Relial's `mhfz-monster-viewer` (menu page 7). For every **large** monster the overlay can show, under the HP numbers:
+
+- `Poison 120/300 8s`, `Para`, `Sleep`, `KO` (the game calls it stun), `Tranq`: current build-up / threshold. Poison also shows its remaining duration. In `active` mode (default) a status appears only once it starts to build up. `sv` (`always_show`) or `all` shows every status all the time, so you can see which statuses a monster has a threshold for: `Poison 0/300  Para -  Sleep 0/220  KO -`, where `-` means the monster has none. `off` hides them.
+- `ATK x1.50  DEF x0.80`: the monster's attack and defense multipliers (off by default, key `sm`).
+- `eff 2000/2000`: effective HP = HP divided by the defense multiplier (off by default, key `se`).
+
+In the Alexander style this is a second box under the monster's box. Colours are in `[Status]`.
+
+**Please confirm on F5.** The offsets inside the monster struct come from the viewer's G1 client. They fit F5 (same struct size, same HP offsets), but the status values have not been confirmed on F5 yet. Implausible values are not shown. With the log on, the first time each monster is seen the log gets a line `Status raw slot N id M: poison=.. para=.. atk=.. def=..`. Poison, paralyse or put a monster to sleep and send me that log if numbers are missing or wrong.
+
+**Not ported (needs code running inside the game).** Relial's viewer is a DLL injected into the game. It hooks a game function that runs every frame, and calls two of the game's own functions to get the hitzone tables. A Python program outside the game can only read memory, so these are not available:
+
+- hitzone values per part (cut / blunt / shot / elements / stun) and change highlighting,
+- the hit log and per-part hit statistics (which hitzone you hit, scale, vectors),
+- per-part health and the seen-states history (they depend on the hitzone tables).
+
+The exact "in quest" flag is not known for F5 either; the overlay uses its own town filter instead (see Behaviour notes).
+
+## Quest timer
+
+The quest time is shown above the monsters (`tm` toggles it, `td` switches between counting up and down): `0:55 / 50:00` is 55 seconds elapsed of a 50 minute limit; with `timer_direction = down` it reads `49:05 / 50:00`. In the Alexander style it is the first box (`Time 0:55 / 50:00`).
+
+
+## Window stacking
+
+With `stack_mode = game` (default) the overlay is owned by the game window: it always sits just above the game and goes behind other programs when you switch to them (a browser, the Claude app ...), and it hides when the game is minimized. With `always` it stays on top of every window. The preview (`v`) is always on top so you can place it while the console is active.
+
 ## Starting the game with the overlay
 
 The overlay can start the game for you and fill in the launcher's fields, like Lvdew did.
@@ -279,6 +328,10 @@ Created on the first run. Change it with the menu or by editing the file. Invali
 | `show_hp_percentage` | `true` | Show the HP percentage |
 | `show_initial_hp` | `true` | Show the maximum HP next to the current HP |
 | `highlight_capturable` | `true` | Highlight monsters in the capture range |
+| `show_carve_timer` | `true` | After a quest, show the carving countdown instead of the quest time |
+| `stack_mode` | `game` | `game` = the overlay sits just above the game window and goes behind other programs when you switch away; `always` = on top of every window |
+| `show_timer` | `true` | Show the quest time above the monsters |
+| `timer_direction` | `up` | `up` = time since the quest started (`0:55 / 50:00`), `down` = time left (`49:05 / 50:00`) |
 | `low_hp_percent` | `0` | Also highlight large monsters without a capture range below this percent (0 = never) |
 | `only_in_quest` | `true` | Hide the overlay outside quests |
 | `only_when_focused` | `false` | Show only while the game window is the active window. Independent of this, the overlay is always hidden while the console / terminal is active |
@@ -340,6 +393,17 @@ Created on the first run. Change it with the menu or by editing the file. Invali
 | `background_opacity`, `capture_background_opacity` | `100`, `100` | Box opacity (0 = no boxes) |
 | `window_opacity` | `85` | Opacity of the whole overlay |
 
+### [Status]
+
+| Key | Default | Description |
+|---|---|---|
+| `mode` | `active` | `off`, `active` (only above 0) or `all` |
+| `always_show` | `false` | Show every status all the time; a status the monster cannot get shows as `-`. Same as `mode = all` (but `mode = off` still hides everything) |
+| `poison`, `para`, `sleep`, `ko`, `tranq` | `true` | Show each status |
+| `multipliers` | `false` | Attack / defense multiplier |
+| `effective_hp` | `false` | HP divided by the defense multiplier |
+| `poison_color`, `para_color`, `sleep_color`, `ko_color`, `tranq_color` | `#c084fc`, `#ffb347`, `#6cb8ff`, `#ffe066`, `#66e08a` | Colours |
+
 ### [Launch]
 
 | Key | Default | Description |
@@ -399,6 +463,8 @@ Windows and Tkinter allow only some transparency:
 
 **Console and focus.** The overlay is never drawn over the program's own console, cmd, PowerShell or Windows Terminal window, so it cannot cover the menu. The preview (`v`) is the exception, so you can place it. With `only_when_focused = true` it also hides while any other program is active.
 
+**How the values are kept up to date.** Lvdew draws inside the game's Direct3D rendering and Relial's viewer is a DLL that hooks a game function called every frame, so both read the monster data on the game's own thread, at a moment when it is consistent, and Relial's also checks the game's quest-state value (2 or 3) first. This program is a separate process: it can only poll the memory about 30 times a second and cannot choose the moment. The measures below compensate for that.
+
 **Monster list dropouts.** The overlay polls the game's memory. Polling can catch the game while it rebuilds the monster array, which gave empty or garbage reads. The reader therefore: uses only the main monster array pointer (and the address that last worked if the pointer glitches), ignores implausible slots (a large monster without a size, id 0, HP out of range), trusts a slot only after two reads in a row, and keeps the last good list for 5 seconds (`HOLD_SECONDS` in the script) when a read comes back empty. After a quest ends the overlay therefore stays for about 5 seconds before it disappears.
 
 **Screenshots.** The screenshot keys are checked every 8 ms and the overlay is hidden at once for `screenshot_hide_seconds`. Add keys such as `F12` to `screenshot_keys` for Steam or other tools. Screenshots started by something other than a key press cannot be detected.
@@ -412,7 +478,7 @@ Windows and Tkinter allow only some transparency:
 
 ## Contributors
 
-- **Will** - project owner. Set the goals and requirements, supplied the F5 client and server setup, the icons, the reference tools and the tuned default settings, and tested every version on the real game (reports and logs that drove most fixes).
+- **Will** - project owner. Ran the timer search hunt and the `!timer` comparison that located the quest timer. Set the goals and requirements, supplied the F5 client and server setup, the icons, the reference tools and the tuned default settings, and tested every version on the real game (reports and logs that drove most fixes).
 - **Labin222** - tested the overlay, gave suggestions, helped with the tranq bomb icon.
 - **Claude (Anthropic)** - wrote the code and documentation together with Will: the memory reader, both overlay styles, the console menu, icons, auto-start and login, and the exe build.
 
@@ -421,7 +487,7 @@ Windows and Tkinter allow only some transparency:
 
 This project was made possible in part by the work, research and ideas of other Monster Hunter community developers. Special thanks to:
 
-- **[Relial - MHFZ Monster Viewer](https://github.com/Relial/mhfz-monster-viewer)**
+- **[Relial - MHFZ Monster Viewer](https://github.com/Relial/mhfz-monster-viewer)** (status build-ups, multipliers and effective HP are ported from it)
   Reference and inspiration for reading live monster information from Monster Hunter Frontier, especially hitzone values (HZVs) and monster identification during hunts.
 
 - **[Alexander Lancellott - GitHub](https://github.com/Alexander-Lancellott)**

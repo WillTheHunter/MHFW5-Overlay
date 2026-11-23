@@ -46,7 +46,24 @@ import time
 TARGET_PROC = "mhf.exe"
 ARRAY_PTR_RVAS = (0x51E3378, 0x5725978)
 STRIDE = 0xD80
-HOLD_SECONDS = 5.0          # keep the last good monster list this long when a read comes back empty
+# Status build-up offsets inside a monster struct. Taken from Relial's mhfz-monster-viewer for the G1 client, whose
+# monster struct (size 0xD80, HP at 0x614 / 0x6AC) matches F5. NOT yet confirmed on F5: check with the log.
+STATUS_DEFS = [   # key, label, threshold offset, current offset, colour
+    ("poison", "Poison", 0x888, 0x88A, "#c084fc"),
+    ("para", "Para", 0x880, 0x886, "#ffb347"),
+    ("sleep", "Sleep", 0x86A, 0x86C, "#6cb8ff"),
+    ("ko", "KO", 0xA64, 0x872, "#ffe066"),
+    ("tranq", "Tranq", 0x878, 0x87A, "#66e08a"),
+]
+OFF_POISON_DUR, OFF_ATK, OFF_DEF = 0x890, 0x898, 0x89C
+# Quest timer (found with f5_timer_finder.py on F5): u32 frame counters, 30 per second, inside mhfo.dll
+TIMER_REMAIN_RVA = 0x54ECA20       # frames left; the quest limit (u32, frames) follows right after it
+TIMER_ELAPSED_RVA = 0x4B31A78      # frames since the quest started (the same value !timer prints as (1658f))
+# Quest-end carving countdown (60 s or less): found as a value that mirrors the quest time during the quest and
+# then jumps to 1800 frames and counts down. A heap object whose pointer sits at a fixed place in mhfo.dll.
+HUD_PTR_RVA, HUD_TIMER_OFF = 0x546C58C, 0x3D8
+CARVE_MAX_FRAMES = 5400            # 3 minutes: bigger values are not a carving countdown
+HOLD_SECONDS = 3.0          # keep the last good monster list this long when a read comes back empty
 MAX_SLOTS = 40
 TABLE_RVA = 0x57D9AEE
 KEY_RVA = 0xC6F714
@@ -286,6 +303,15 @@ SCHEMA = [
     ("General", "show_icons", "show_icons", "true", "bool",
      "lvdew style: small / silver / gold crown icon at the end of the name line; capture icon and skull (bones) "
      "icon at the end of the HP line. Off = crown written as text, no capture / dead icons"),
+    ("General", "show_timer", "show_timer", "true", "bool",
+     "show the quest time above the monsters (read from the game, 30 frames = 1 second)"),
+    ("General", "show_carve_timer", "show_carve_timer", "true", "bool",
+     "after a quest: show the carving countdown (60 seconds, or shorter in some quests) instead of the quest time"),
+    ("General", "stack_mode", "stack_mode", "game", "game|always",
+     "game = the overlay sits just above the game window and goes behind other programs when you switch away; "
+     "always = it stays on top of every window"),
+    ("General", "timer_direction", "timer_direction", "up", "up|down",
+     "up = time since the quest started, like !timer (0:55 / 50:00); down = time left (49:05 / 50:00)"),
     ("General", "low_hp_percent", "low_hp_percent", "0", "float:0:100",
      "also highlight large monsters that have no capture range once HP is below this percent (0 = never)"),
 
@@ -372,6 +398,28 @@ SCHEMA = [
     ("Alexander", "window_opacity", "window_opacity", "85", "int:20:100",
      "opacity of the whole overlay, 0-100 (Windows cannot fade only the box backgrounds)"),
 
+    ("Status", None, None, None, None,
+     "Status build-ups of large monsters, read from the game like Relial's monster viewer does (poison, paralysis, "
+     "sleep, KO = stun, tranquilizer). The offsets come from the G1 client and still have to be confirmed on F5"),
+    ("Status", "mode", "status_mode", "active", "off|active|all",
+     "off = nothing, active = only statuses that have started to build up (value above 0), all = every status always"),
+    ("Status", "always_show", "status_always", "false", "bool",
+     "show every status all the time (a status the monster cannot get shows as '-'), not only once it is building up"),
+    ("Status", "poison", "st_poison", "true", "bool", "show poison"),
+    ("Status", "para", "st_para", "true", "bool", "show paralysis"),
+    ("Status", "sleep", "st_sleep", "true", "bool", "show sleep"),
+    ("Status", "ko", "st_ko", "true", "bool", "show KO (the game calls it stun)"),
+    ("Status", "tranq", "st_tranq", "true", "bool", "show tranquilizer"),
+    ("Status", "multipliers", "show_multipliers", "false", "bool",
+     "show the monster's attack and defense multiplier (rage / enrage, hardened states)"),
+    ("Status", "effective_hp", "show_effective_hp", "false", "bool",
+     "show HP divided by the defense multiplier (effective HP) next to the HP numbers"),
+    ("Status", "poison_color", "st_poison_color", "#c084fc", "str", "colours: names or #rrggbb"),
+    ("Status", "para_color", "st_para_color", "#ffb347", "str", None),
+    ("Status", "sleep_color", "st_sleep_color", "#6cb8ff", "str", None),
+    ("Status", "ko_color", "st_ko_color", "#ffe066", "str", None),
+    ("Status", "tranq_color", "st_tranq_color", "#66e08a", "str", None),
+
     ("Launch", None, None, None, None,
      "Start the game together with this overlay. Only happens when mhf.exe is not already running. "
      "NOTE: the password is stored here as plain text"),
@@ -392,7 +440,7 @@ SCHEMA = [
     ("Debug", "log_file", "log_file", "f5_overlay.log", "str", "relative paths are next to f5_overlay.py"),
     ("Debug", "log_level", "log_level", "info", "info|debug", "debug also logs every change of the monster list"),
 ]
-SECTION_ORDER = ["General", "Layout", "Lvdew", "Alexander", "Launch", "Debug"]
+SECTION_ORDER = ["General", "Layout", "Lvdew", "Alexander", "Status", "Launch", "Debug"]
 
 
 def _tobool(v):
@@ -628,6 +676,27 @@ def build_entries(monsters_state, table, settings):
              "dead": bool(is_large and cur <= 0),
              "capture": bool(is_large and cur > 0 and settings.highlight_capturable and in_range),
              "hot": bool(is_large and settings.highlight_capturable and (in_range or low))}
+        e["status"], e["mult"], e["eff"] = [], "", None
+        if is_large:
+            dfn, atk = m.get("dfn"), m.get("atk")
+            if settings.status_mode != "off":
+                show_all = settings.status_mode == "all" or settings.status_always
+                for key, label, _t, _c, _col in STATUS_DEFS:
+                    if not getattr(settings, "st_" + key):
+                        continue
+                    v = (m.get("st") or {}).get(key)
+                    colr = getattr(settings, "st_%s_color" % key)
+                    if v and (show_all or v[0] > 0):
+                        extra = ""
+                        if key == "poison" and m.get("pdur"):
+                            extra = " %ds" % (m["pdur"] // 30)
+                        e["status"].append((f"{label} {v[0]}/{v[1]}{extra}", colr))
+                    elif not v and show_all:
+                        e["status"].append((f"{label} -", colr))
+            if settings.show_multipliers and atk is not None and dfn is not None:
+                e["mult"] = f"ATK x{atk:.2f}  DEF x{dfn:.2f}"
+            if settings.show_effective_hp and dfn:
+                e["eff"] = (int(round(cur / dfn)), int(round(mx / dfn)))
         (large if is_large else small).append(e)
     return large + small
 
@@ -646,7 +715,31 @@ def entry_text(e, settings):
     t += f" {e['cur']}"
     if settings.show_initial_hp:
         t += f" | {e['max']}"
+    if e.get("eff"):
+        t += f" | eff {e['eff'][0]}/{e['eff'][1]}"
     return t
+
+
+def timer_text(timer, settings):
+    """'12:05 / 50:00' from (limit_frames, remaining_frames), or '' when there is no timer / it is switched off."""
+    if not timer or not settings.show_timer:
+        return ""
+    limit, remain = timer
+    shown = limit - remain if settings.timer_direction == "up" else remain
+
+    def fmt(frames):
+        sec = max(0, frames) // 30
+        h, m, s = sec // 3600, sec // 60 % 60, sec % 60
+        return f"{h}:{m:02d}:{s:02d}" if h else f"{m}:{s:02d}"
+    return f"{fmt(shown)} / {fmt(limit)}"
+
+
+def extra_text(e):
+    """Second line (status build-ups, multipliers) of an entry, plain text; '' when there is nothing."""
+    parts = [txt for txt, _c in e.get("status", [])]
+    if e.get("mult"):
+        parts.append(e["mult"])
+    return "  ".join(parts)
 
 
 # ----------------------------------------------------------------------------------------------
@@ -677,6 +770,10 @@ if os.name == "nt":
     u32.EnumWindows.argtypes = [_P, _P]
     u32.GetParent.argtypes = [_P]
     u32.GetParent.restype = _P
+    u32.SetWindowPos.argtypes = [_P, _P, ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_int, wt.UINT]
+    if hasattr(u32, "SetWindowLongPtrW"):
+        u32.SetWindowLongPtrW.argtypes = [_P, ctypes.c_int, _P]
+        u32.SetWindowLongPtrW.restype = _P
     u32.GetWindowLongW.argtypes = [_P, ctypes.c_int]
     u32.GetWindowLongW.restype = ctypes.c_long
     u32.SetWindowLongW.argtypes = [_P, ctypes.c_int, ctypes.c_long]
@@ -1097,12 +1194,72 @@ class Reader(threading.Thread):
         self.state = {"status": "waiting for mhf.exe", "monsters": []}
         self._last_sig = None
         self._lock = threading.Lock()
+        self._raw_logged = set()
+        self.timer = None            # (limit_frames, remaining_frames) or None
+        self.carve = None            # frames left of the carving countdown after a quest, or None
+        self._tm_last = None         # state of the quest timer / carving detection
+        self._tm_change = 0.0
+        self._tm_running = False
+        self._hud_prev = None
+        self._hud_dec = 0
         self._seen = {}              # (slot, id) -> consecutive reads in which the entry looked valid
         self._good = []              # last list that was shown
         self._good_t = 0.0
         self._diag_t = 0.0
         self._arr = None             # last array address that held live monsters
         self.why = ""                # reason of the last empty read (goes into the log)
+
+    def read_timer(self):
+        g = self.g
+        base = g.mhfo[0]
+        remain = g.u32(base + TIMER_REMAIN_RVA)
+        limit = g.u32(base + TIMER_REMAIN_RVA + 4)
+        if remain is None or limit is None or not (0 < limit <= 30 * 3600 * 4) or remain > limit:
+            return None
+        return limit, remain
+
+    def read_carve(self, timer):
+        """Carving countdown. Active only after the quest timer has stopped, while the game's HUD value counts down."""
+        g = self.g
+        now = time.time()
+        remain = timer[1] if timer else None
+        if remain is not None:
+            if remain != self._tm_last:
+                if self._tm_last is not None and remain < self._tm_last:
+                    self._tm_running = True
+                self._tm_last, self._tm_change = remain, now
+        frozen = self._tm_running and now - self._tm_change > 1.0
+        hud = None
+        p = g.u32(g.mhfo[0] + HUD_PTR_RVA)
+        if p and 0x10000 <= p < 0x7FFF0000:
+            hud = g.u32(p + HUD_TIMER_OFF)
+        if hud is not None and self._hud_prev is not None and hud != self._hud_prev:
+            self._hud_dec = self._hud_dec + 1 if hud < self._hud_prev else 0
+        if hud != self._hud_prev:
+            self._hud_prev = hud
+        if not (frozen and hud is not None and 0 < hud <= CARVE_MAX_FRAMES and hud != remain):
+            self._hud_dec = 0
+            if self.carve is not None:
+                log.info("Carving countdown ended / not active (hud=%s, quest timer %s)", hud, timer)
+            return None
+        if self._hud_dec >= 3:
+            if self.carve is None:
+                log.info("Carving countdown started: %d frames (%.1f s), quest timer %s", hud, hud / 30.0, timer)
+            return hud
+        return self.carve if self.carve is not None and self._hud_dec else None
+
+    def _read_status(self, blk):
+        """Status build-ups, attack / defence multipliers of one monster struct (plausibility checked)."""
+        st = {}
+        for key, _label, o_thr, o_cur, _col in STATUS_DEFS:
+            thr = struct.unpack_from("<h", blk, o_thr)[0]
+            cur = struct.unpack_from("<h", blk, o_cur)[0]
+            if 0 < thr <= 30000 and 0 <= cur <= 32000:
+                st[key] = (cur, thr)
+        dur = struct.unpack_from("<H", blk, OFF_POISON_DUR)[0]
+        atk, dfn = struct.unpack_from("<ff", blk, OFF_ATK)
+        return {"st": st, "pdur": dur if 0 < dur < 20000 else 0,
+                "atk": atk if 0.01 < atk < 100 else None, "dfn": dfn if 0.01 < dfn < 100 else None}
 
     def read_monsters(self):
         g = self.g
@@ -1163,7 +1320,12 @@ class Reader(threading.Thread):
                 continue                     # a large monster always has a size: this slot is stale / garbage
             if info is None and size is None:
                 continue
-            out.append({"slot": slot, "id": mid, "cur": max(cur, 0), "max": mx, "size": size})
+            mon = {"slot": slot, "id": mid, "cur": max(cur, 0), "max": mx, "size": size}
+            try:
+                mon.update(self._read_status(blk))
+            except struct.error:
+                pass
+            out.append(mon)
         # an entry is trusted after it looked valid in two reads in a row (filters one-off garbage)
         seen = {}
         stable = []
@@ -1188,6 +1350,13 @@ class Reader(threading.Thread):
             log.info("Reader status: %s", status)
         if sig != self._last_sig:
             self._last_sig = sig
+            for m in monsters:
+                k = (m["slot"], m["id"])
+                if k not in self._raw_logged and m.get("st") is not None:
+                    self._raw_logged.add(k)
+                    log.info("Status raw slot %d id %d: %s atk=%s def=%s poison_dur=%s", m["slot"], m["id"],
+                             " ".join("%s=%d/%d" % (kk, v[0], v[1]) for kk, v in m["st"].items()) or "(none plausible)",
+                             m["atk"], m["dfn"], m["pdur"])
             log.info("Monsters: %s", ", ".join("slot %d id %d size %s%% hp %d/%d" % (
                 m["slot"], m["id"], m.get("size"), m["cur"], m["max"]) for m in monsters) or "(none)")
 
@@ -1206,6 +1375,8 @@ class Reader(threading.Thread):
                     log.info("Attached to %s pid=%s mhfo base=0x%X size=0x%X", TARGET_PROC, self.g.pid,
                              self.g.mhfo[0], self.g.mhfo[1])
                 mons = self.read_monsters()
+                self.timer = self.read_timer()
+                self.carve = self.read_carve(self.timer)
                 now = time.time()
                 if mons:
                     self._good, self._good_t = mons, now
@@ -1240,8 +1411,11 @@ class Reader(threading.Thread):
 # ----------------------------------------------------------------------------------------------
 # Overlay window (tkinter, standard library) - two styles drawn on one canvas
 # ----------------------------------------------------------------------------------------------
+DEMO_TIMER = (90000, 90000 - 1658)
 DEMO_MONSTERS = [
-    {"slot": 0, "id": 27, "cur": 1600, "max": 1600, "size": 115},
+    {"slot": 0, "id": 27, "cur": 1600, "max": 1600, "size": 115, "pdur": 240,
+     "st": {"poison": (120, 300), "para": (0, 200), "ko": (70, 150), "sleep": (45, 220), "tranq": (0, 100)},
+     "atk": 1.5, "dfn": 0.8},
     {"slot": 1, "id": 27, "cur": 215, "max": 1400, "size": 88},
     {"slot": 2, "id": 11, "cur": 9800, "max": 21000, "size": 128},
     {"slot": 3, "id": 1, "cur": 2100, "max": 15000, "size": 100},
@@ -1265,6 +1439,8 @@ class OverlayWindow:
         self._size = (0, 0)
         self._fonts = {}
         self._icons = {}
+        self.timer_str = ""
+        self._stack_key = None
         self._last_origin = "unset"
         self._last_status = None
         self._last_fg = None
@@ -1344,6 +1520,8 @@ class OverlayWindow:
             t += f"/{e['max']}"
         if s.show_hp_percentage:
             t += f"  ({e['pct']}%)"
+        if e.get("eff"):
+            t += f"  eff {e['eff'][0]}/{e['eff'][1]}"
         return t
 
     def icon(self, name, size):
@@ -1407,6 +1585,13 @@ class OverlayWindow:
                 lines.append([(self._lvdew_numbers(e), col)] + ([(" ", col)] + marks if marks else []))
             elif s.lv_numbers == "off" and marks:
                 segs += [(" ", col)] + marks
+            if e.get("status"):
+                st_segs = []
+                for txt, c in e["status"]:
+                    st_segs += [(txt, self.color(c, "#ffffff")), ("  ", col)]
+                lines.append(st_segs[:-1])
+            if e.get("mult"):
+                lines.append([(e["mult"], col)])
             widths = [sum(seg_w(sg) for sg in ln) for ln in lines]
             tw, th = max(widths), lh * len(lines)
             gap = 3
@@ -1418,14 +1603,21 @@ class OverlayWindow:
                 rw, rh = tw + 8 + bw, max(th, bh)
             rows.append((e, lines, tw, th, rw, rh, hot))
 
-        W = max((r[4] for r in rows), default=0) + 2 * pad
-        H = sum(r[5] for r in rows) + s.lv_row_gap * max(0, len(rows) - 1) + 2 * pad
+        timer_h = (lh + s.lv_row_gap) if self.timer_str else 0
+        W = max([r[4] for r in rows] + [font.measure(self.timer_str) if self.timer_str else 0]) + 2 * pad
+        H = sum(r[5] for r in rows) + s.lv_row_gap * max(0, len(rows) - 1) + 2 * pad + timer_h
         frame_kw = self.shape(self.color(s.lv_frame_color, "#000000"), s.lv_frame_opacity)
         if s.lv_frame and rows and frame_kw:
             cv.create_rectangle(0, 0, W, H, **frame_kw)
         box_kw = self.shape(self.color(s.lv_box_color, "#000000"), s.lv_box_opacity)
         shadow_col = self.color(s.lv_shadow_color, "#000000")
         y = pad
+        if self.timer_str:
+            tcol = self.color(s.lv_text_color, "#ffffff")
+            if s.lv_shadow:
+                cv.create_text(pad + 1, pad + dy + 1, text=self.timer_str, anchor="nw", fill=shadow_col, font=font)
+            cv.create_text(pad, pad + dy, text=self.timer_str, anchor="nw", fill=tcol, font=font)
+            y += timer_h
         for e, lines, tw, th, rw, rh, hot in rows:
             x = pad
             if not bar_on:
@@ -1481,16 +1673,26 @@ class OverlayWindow:
         lh = font.metrics("linespace")
         padx = 15 if s.orientation == "center" else 10
         pady, gap = 5, 5
-        texts = [entry_text(e, s) for e in entries]
+        boxes = []
+        if self.timer_str:
+            boxes.append(({"capture": False}, self.timer_str if self.timer_str.startswith("Carve") else "Time " + self.timer_str, True))
+        for e in entries:
+            boxes.append((e, entry_text(e, s), False))
+            xt = extra_text(e)
+            if xt:
+                boxes.append((e, xt, True))
+        entries = [b[0] for b in boxes]
+        texts = [b[1] for b in boxes]
+        extras = [b[2] for b in boxes]
         widths = [font.measure(t) + 2 * padx for t in texts]
         W = max(widths)
         h = lh + 2 * pady
         y = 0
-        for e, t, w in zip(entries, texts, widths):
+        for e, t, w, extra in zip(entries, texts, widths, extras):
             if s.align:
                 w = W
             x = {"left": 0, "right": W - w}.get(s.orientation, (W - w) // 2)
-            cap = e["capture"]
+            cap = e["capture"] and not extra
             bg = self.color(s.colors["capture_background_color" if cap else "background_color"], "#2f4f4f")
             fg = self.color(s.colors["capture_text_color" if cap else "text_color"], "#7fffd4")
             kw = self.shape(bg, s.capture_background_opacity if cap else s.background_opacity)
@@ -1535,6 +1737,34 @@ class OverlayWindow:
         except self.tk.TclError:
             pass
 
+    def _stack(self):
+        """z-order: 'game' = owned by the game window (always just above it, behind other programs when the
+        game is not in front); 'always' (and the preview) = topmost."""
+        s = self.s
+        game_hwnd = None
+        if os.name == "nt" and s.stack_mode == "game" and not s.preview and self.reader is not None:
+            game_hwnd = self.reader.g._hwnd
+            if game_hwnd and not u32.IsWindow(game_hwnd):
+                game_hwnd = None
+        key = ("game", game_hwnd) if game_hwnd else ("top",)
+        if key == self._stack_key:
+            return
+        self._stack_key = key
+        try:
+            if game_hwnd:
+                top = u32.GetParent(self.root.winfo_id()) or self.root.winfo_id()
+                self.root.attributes("-topmost", False)
+                setptr = getattr(u32, "SetWindowLongPtrW", None) or u32.SetWindowLongW
+                setptr(top, -8, game_hwnd)                       # GWLP_HWNDPARENT: owner = game window
+                u32.SetWindowPos(top, 0, 0, 0, 0, 0, 0x1 | 0x2 | 0x10)   # HWND_TOP, no move / size / activate
+                log.info("Overlay stacked above the game window 0x%X", game_hwnd)
+            else:
+                self.root.attributes("-topmost", True)
+                log.info("Overlay is topmost (mode %s)", "preview" if s.preview else s.stack_mode)
+        except Exception:
+            log.exception("Could not change the overlay stacking")
+            self.root.attributes("-topmost", True)
+
     def hide(self):
         if self.visible:
             self.root.withdraw()
@@ -1565,14 +1795,21 @@ class OverlayWindow:
             log.info("Overlay sees reader status: %s", status)
             self._last_status = status
         entries = build_entries(state, self.table, s) if state else []
-        origin = self._origin() if entries else None
+        carve = None if (s.preview or self.reader is None or not s.show_carve_timer) else self.reader.carve
+        if carve is not None:
+            sec = max(0, carve) // 30
+            self.timer_str = f"Carve {sec // 60}:{sec % 60:02d}"
+        else:
+            self.timer_str = timer_text(DEMO_TIMER if (s.preview or self.reader is None) else self.reader.timer, s)
+        show = bool(entries) or carve is not None
+        origin = self._origin() if show else None
         if origin != self._last_origin:
             log.info("Game window origin: %r", origin)
             self._last_origin = origin
-        if not entries or origin is None:
+        if not show or origin is None:
             self.hide()
             return
-        sig = (s.version, tuple((e["name"], e["cur"], e["max"], e["size"], e["crown"], e["capture"], e["dead"], e["hot"],
+        sig = (s.version, self.timer_str, tuple((e["name"], e["cur"], e["max"], e["size"], e["crown"], e["capture"], e["dead"], e["hot"],
                                  e["pct"]) for e in entries))
         if sig != self._sig:
             self._sig = sig
@@ -1590,9 +1827,10 @@ class OverlayWindow:
             self.root.geometry(geo)
         if not self.visible:
             self.root.deiconify()
-            self.root.attributes("-topmost", True)
             self.visible = True
+            self._stack_key = None
             log.info("Overlay shown, geometry %s", geo)
+        self._stack()
 
     def tick(self):
         if self.stop:
@@ -1737,6 +1975,23 @@ PAGES.append(("Icons and starting the game with the overlay", [
      "secret": True},
     _C("gm", "login_mode", "login: fill = fill the fields, autolc = /AUTOLC", ["fill", "autolc"]),
     {"key": "go", "type": "action", "attr": "", "label": "start the game now (if it is not running)"},
+]))
+PAGES.append(("Status build-ups (poison, para, sleep, KO, tranq), multipliers and quest timer", [
+    _C("st", "status_mode", "show status build-ups: off / active (only above 0) / all", ["off", "active", "all"]),
+    _T("sp", "st_poison", "poison"),
+    _T("sa", "st_para", "paralysis"),
+    _T("ss", "st_sleep", "sleep"),
+    _T("sk", "st_ko", "KO (stun)"),
+    _T("sq", "st_tranq", "tranquilizer"),
+    _T("sm", "show_multipliers", "attack / defense multiplier"),
+    _T("se", "show_effective_hp", "effective HP (HP / defense multiplier)"),
+    _T("sv", "status_always", "always show every status ('-' = the monster has none)"),
+]))
+PAGES.append(("Quest timers and window", [
+    _T("tm", "show_timer", "quest timer"),
+    _C("td", "timer_direction", "quest timer counts up (elapsed) / down (time left)", ["up", "down"]),
+#    _T("cm", "show_carve_timer", "carving countdown after the quest"),
+    _C("ot", "stack_mode", "overlay stacking: game = only above the game window / always = on top of all", ["game", "always"]),
 ]))
 SPECS = {c["key"]: c for _title, cmds in PAGES for c in cmds}
 
