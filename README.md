@@ -11,7 +11,7 @@ For every monster it shows:
 - A skull (bones) icon when the monster is dead
 - Optionally small monsters too
 
-It also shows status build-ups (poison, paralysis, sleep, KO, tranquilizer), attack / defense multipliers and effective HP, ported from Relial's monster viewer. It has two visual styles, a console menu with eight pages, an optional log, and can start the game for you and fill in the login fields.
+It also shows status build-ups (poison, paralysis, sleep, Stun, tranquilizer), attack / defense multipliers and effective HP, ported from Relial's monster viewer. It has two visual styles, a console menu with eight pages, an optional log, and can start the game for you and fill in the login fields.
 
 ## Contents
 
@@ -180,30 +180,34 @@ An unknown colour name keeps the old colour and shows a warning.
 | `sh` | Hide while taking screenshots |
 | `cl` | Clear the console after every command |
 | `bn` | Text-art title |
+| `tw` | Show the quest timer even when no monster is present (only while a quest is running, never in town) |
+| `cq` | Capture state only for monsters that can be tranquilized |
+| `sz` `sw` `sy` | Sleep / paralysis timers: all, sleep, paralysis |
+| `ms` | Status messages in the console (`[waiting for mhf.exe]`, `[game running, no quest]`, `[ok]` and the status line of the menu) on / off |
 | `ad` | Ask for Administrator when started (next start) |
 | `i` | Write a log file |
 | `u N` | Read / redraw interval in milliseconds (lower = faster) |
 
-### Page 7 - Status build-ups
+### Page 6 - Status build-ups
 
 | Key | Description |
 |---|---|
 | `st` | Status mode: `off` / `active` (only above 0) / `all` |
-| `sp`, `sa`, `ss`, `sk`, `sq` | Poison, paralysis (para), sleep, KO, tranquilizer on / off |
+| `sp`, `sa`, `ss`, `sk`, `sq` | Poison, paralysis (para), sleep, Stun, tranquilizer on / off |
 | `sm` | Attack / defense multiplier |
 | `se` | Effective HP |
-| `sv` | Always show every status (`-` = the monster has no such status) |
+| `sv` | In `st` mode `all`: also list the statuses the monster has no threshold for, as `-` (off = only statuses it can get) |
 
-### Page 8 - Quest timers and window
+### Page 7 - Quest timers and window
 
 | Key | Description |
 |---|---|
 | `tm` | Quest timer on / off |
 | `td` | Quest timer counts `up` (elapsed, like `!timer`) or `down` (time left) |
-| `cm` | Carving countdown after the quest on / off |
+| `cm` | Return countdown after the quest on / off |
 | `ot` | Overlay stacking: `game` (only above the game window) or `always` (on top of everything) |
 
-### Page 6 - Icons and starting the game
+### Page 8 - Icons and starting the game
 
 | Key | Description |
 |---|---|
@@ -257,9 +261,10 @@ The five icons are built into the script (base64 PNG, six sizes each), so nothin
 
 ## Status build-ups, multipliers, effective HP
 
-Ported from Relial's `mhfz-monster-viewer` (menu page 7). For every **large** monster the overlay can show, under the HP numbers:
+Ported from Relial's `mhfz-monster-viewer` (menu page 6). For every **large** monster the overlay can show, under the HP numbers:
 
-- `Poison 120/300 8s`, `Para`, `Sleep`, `KO` (the game calls it stun), `Tranq`: current build-up / threshold. Poison also shows its remaining duration. In `active` mode (default) a status appears only once it starts to build up. `sv` (`always_show`) or `all` shows every status all the time, so you can see which statuses a monster has a threshold for: `Poison 0/300  Para -  Sleep 0/220  KO -`, where `-` means the monster has none. `off` hides them.
+- `Poison 120/300 8s`, `Para`, `Sleep`, `KO` (the game calls it stun), `Tranq`: current build-up / threshold. Poison also shows its remaining duration. In `active` mode (default) a status appears only once it starts to build up. `all` shows every status the monster has a threshold for all the time (`Poison 0/300  Sleep 0/220`). With `sv` on, the statuses it has no threshold for are listed too, as `Para -  KO -`. `off` hides them all.
+- **Only the area host sees build-ups.** The game keeps the status values on the host's side, so for the other players in the party they may stay at 0 or absent. This is how the game works, not a bug of the overlay.
 - `ATK x1.50  DEF x0.80`: the monster's attack and defense multipliers (off by default, key `sm`).
 - `eff 2000/2000`: effective HP = HP divided by the defense multiplier (off by default, key `se`).
 
@@ -279,6 +284,33 @@ The exact "in quest" flag is not known for F5 either; the overlay uses its own t
 
 The quest time is shown above the monsters (`tm` toggles it, `td` switches between counting up and down): `0:55 / 50:00` is 55 seconds elapsed of a 50 minute limit; with `timer_direction = down` it reads `49:05 / 50:00`. In the Alexander style it is the first box (`Time 0:55 / 50:00`).
 
+The values are the game's own frame counters (30 per second), read from fixed places in `mhfo.dll`: frames left at `mhfo+0x54ECA20`, the limit right after it, and frames elapsed at `mhfo+0x4B31A78`. They were found with `f5_timer_finder.py` and matched against the server's `!timer` result (1658 frames = 55.267 s). These addresses belong to this F5 `mhfo.dll`; another build needs `f5_timer_finder.py` run again. The timer is only read while monsters are listed, so it appears together with the monster list.
+
+`f5_timer_finder.py` is a separate helper (numpy needed, installed automatically). It watches the game while you hunt and logs every value that behaves like a timer; read its header for the steps.
+
+### Return countdown
+
+After a quest ends the game counts down a return time (60 seconds, shorter in some quests). The overlay then shows `Return 0:42` in place of the quest time (`cm` toggles it), even when the monster list is already empty, and removes it when the countdown ends or a new quest starts.
+
+The return countdown now sits next to the quest clock (`12:05 / 50:00   Return 0:42`) from the moment the quest clock stops until it ends. The return counter is not at a fixed place (the fixed offset `[mhfo+0x546C58C]+0x538` worked in one run and read 0 in the next), so since v15 the overlay looks for it: after the quest timer stops it scans the objects around the quest HUD pointers for a number that counts down at about 30 per second, locks onto it and shows `Return 0:42`. The log shows `Return scan: ...` (every 5 s while looking), `Return counter found at 0x...` and `Return countdown started (auto-detected)`. If it still does not show, send the log: those lines say what was seen.
+
+## Capture state, sleep and paralysis timers
+
+**Capture state.** The capture icon / yellow highlight needs two things: the HP is inside the capture range of the monster table, and the monster can be tranquilized. The game gives every monster a tranquilizer threshold (`+0x878`); monsters that cannot be captured have 0 there, so the overlay no longer shows the capture state for them. Switch `cq` (ini `capture_needs_tranq`) off to go back to the table only.
+
+**Sleep / paralysis timers.** The game keeps the state flags of a monster in one byte (`+0x893`): `0x01` tranquilized, `0x02` asleep, `0x08` paralysed. The overlay shows `Asleep 12s` / `Paralysed 7s`: the time since the game set the flag (so it counts up). Toggles: `sz` (all), `sw` (sleep), `sy` (paralysis); ini `[Status] active_timers`, `sleep_timer`, `para_timer`. This is a count-up, not a countdown: the game does not store the remaining time of sleep / paralysis as a plain counter in the build-up fields. The effect length comes from the monster's action (animation) data.
+
+**Subsequent applications.** The game code shows the rule: each time sleep ends, the sleep threshold is raised by a per-monster amount (and an application counter goes up, at most 4 by default, some monsters differ); the same for paralysis. The overlay already shows the live threshold, so `Sleep 0/220` becomes `Sleep 0/320` after the first sleep. Large quest monsters can also have the threshold set to the maximum, which means immune.
+
+**Flash and traps (shock, pitfall) are not in yet.** I could not find their flags or timers in the game code without seeing them happen. With the log on (`i`) the overlay now writes, for large monsters, `State START / END` lines (sleep, para) and `Watch slot N id M changed: ...` lines with the fields that change (state bytes, action timer `8BA` with its total `8B8`, and more). To get flash and trap timers: do each of these once on a large monster with the log on (flash bomb, shock trap, pitfall trap, and a sleep and a para for comparison), note roughly when each started and ended, and send `f5_overlay.log`. The timers show up as a field that counts down while the effect lasts.
+
+## When the overlay disappears
+
+With the log on (`i`), every hide now says why, for example `Overlay hidden: no monsters to show (reader status ok, 3 raw, 0 after quest filter)` or `foreground window is console`, followed by the reader's last reason. If it vanishes, send the log: that line shows which part dropped out (the memory read, the quest filter that wants a large monster, the focus rules, or the game window).
+
+## Finding why monsters vanish: f5_monster_tracker.py
+
+A diagnostic helper (needs numpy, installed automatically; only reads memory). Start it while you play and press Ctrl+C when done; it writes `f5_monster_tracker.log`: the monster array pointer, every change of the monster list (slot, id, HP, size), `LOST` when no valid monster is found, and at that moment a scan of all game memory for copies of the last seen monster (same HP words and id), with the addresses of the copies and of every pointer to them. Every 30 seconds it does the same scan as a check (`PERIODIC`). It shows whether the data moved to another address or exists several times, which tells what the overlay must follow.
 
 ## Window stacking
 
@@ -307,6 +339,7 @@ On the next start the overlay starts the game **only if `mhf.exe` is not already
 - The password is stored as **plain text** in `f5_overlay.ini` (it is hidden on screen and masked in the log). Do not share the ini.
 - `fill` looks for edit-type controls in the launcher. The one with the password style gets the password; the login name goes to the visible field right above it (a drop-down name list is written as a whole). Hidden, disabled and read-only fields are skipped.
 - If the name lands in the wrong field, turn the log on (`i`), start the game again and open `f5_overlay.log`. It lists the launcher's fields numbered from top to bottom (class, position, current text). Type that number with `gf` (for example `gf 2`) and it is saved.
+- The launcher fields are written at most 3 times each (at least 1.2 seconds apart) and checked by reading them back, so there is no repeated clicking sound.
 - If nothing is filled at all, look for the log line `has no edit controls; children: ...`; it lists the control types the launcher uses.
 - Starting the game needs the same privilege as the overlay (Administrator, if the game requires it).
 
@@ -324,11 +357,13 @@ Created on the first run. Change it with the menu or by editing the file. Invali
 | `hide_dead_small_monsters` | `true` | Hide small monsters at 0 HP |
 | `show_size` | `true` | Show the quest size of large monsters |
 | `show_crown` | `true` | Show the crown |
+| `timer_without_monsters` | `false` | Show the quest timer on its own when no (large) monster is present |
+| `show_messages` | `true` | Status messages in the console; set `false` to hide them |
 | `show_icons` | `true` | Lvdew style: crown, capture and dead icons (off = crown as text) |
 | `show_hp_percentage` | `true` | Show the HP percentage |
 | `show_initial_hp` | `true` | Show the maximum HP next to the current HP |
 | `highlight_capturable` | `true` | Highlight monsters in the capture range |
-| `show_carve_timer` | `true` | After a quest, show the carving countdown instead of the quest time |
+| `show_return_timer` | `true` | After a quest, show the return countdown instead of the quest time |
 | `stack_mode` | `game` | `game` = the overlay sits just above the game window and goes behind other programs when you switch away; `always` = on top of every window |
 | `show_timer` | `true` | Show the quest time above the monsters |
 | `timer_direction` | `up` | `up` = time since the quest started (`0:55 / 50:00`), `down` = time left (`49:05 / 50:00`) |
@@ -398,11 +433,11 @@ Created on the first run. Change it with the menu or by editing the file. Invali
 | Key | Default | Description |
 |---|---|---|
 | `mode` | `active` | `off`, `active` (only above 0) or `all` |
-| `always_show` | `false` | Show every status all the time; a status the monster cannot get shows as `-`. Same as `mode = all` (but `mode = off` still hides everything) |
-| `poison`, `para`, `sleep`, `ko`, `tranq` | `true` | Show each status |
+| `show_invalid` | `false` | Only in `mode = all`: also list statuses the monster has no threshold for, shown as `-` |
+| `poison`, `para`, `sleep`, `stun`, `tranq` | `true` | Show each status |
 | `multipliers` | `false` | Attack / defense multiplier |
 | `effective_hp` | `false` | HP divided by the defense multiplier |
-| `poison_color`, `para_color`, `sleep_color`, `ko_color`, `tranq_color` | `#c084fc`, `#ffb347`, `#6cb8ff`, `#ffe066`, `#66e08a` | Colours |
+| `poison_color`, `para_color`, `sleep_color`, `stun_color`, `tranq_color` | `#c084fc`, `#ffb347`, `#6cb8ff`, `#ffe066`, `#66e08a` | Colours |
 
 ### [Launch]
 
@@ -461,17 +496,19 @@ Windows and Tkinter allow only some transparency:
 
 **Town.** In town the game keeps entries in the monster list that are not quest monsters. With `only_in_quest = true` the overlay stays hidden unless at least one known large monster is present, and ignores unknown ids. If it stays hidden in a real quest, set `only_in_quest = false` (menu key `j`).
 
-**Console and focus.** The overlay is never drawn over the program's own console, cmd, PowerShell or Windows Terminal window, so it cannot cover the menu. The preview (`v`) is the exception, so you can place it. With `only_when_focused = true` it also hides while any other program is active.
+**Console and focus.** The overlay is never drawn over the program's own console, cmd, PowerShell or Windows Terminal window, so it cannot cover the menu. Only the terminal programs that started the overlay count; Explorer (taskbar, desktop, Alt+Tab, or the folder it was double-clicked from) does not, so clicking the taskbar no longer hides the overlay. The preview (`v`) is the exception, so you can place it. With `only_when_focused = true` it also hides while any other program is active.
 
 **How the values are kept up to date.** Lvdew draws inside the game's Direct3D rendering and Relial's viewer is a DLL that hooks a game function called every frame, so both read the monster data on the game's own thread, at a moment when it is consistent, and Relial's also checks the game's quest-state value (2 or 3) first. This program is a separate process: it can only poll the memory about 30 times a second and cannot choose the moment. The measures below compensate for that.
 
-**Monster list dropouts.** The overlay polls the game's memory. Polling can catch the game while it rebuilds the monster array, which gave empty or garbage reads. The reader therefore: uses only the main monster array pointer (and the address that last worked if the pointer glitches), ignores implausible slots (a large monster without a size, id 0, HP out of range), trusts a slot only after two reads in a row, and keeps the last good list for 5 seconds (`HOLD_SECONDS` in the script) when a read comes back empty. After a quest ends the overlay therefore stays for about 5 seconds before it disappears.
+**Monster list dropouts (found with `f5_monster_tracker.py`).** The pointers in `mhfo.dll` are not a reliable way to find the monster list. `mhfo+0x51E3378` is not the start of the list: it points at whichever monster the game is handling right now (any slot of the list, e.g. slot 1 = start + 0xD80, slot 6 = start + 0x5100), at static buffers inside `mhfo.dll` (`0x16d2xxxx`) or at 0, and it changes several times a second. `mhfo+0x5725978` was the steadier one. So the overlay no longer trusts a pointer: it builds candidate start addresses from both pointers (and "pointer minus 1..8 slots"), checks the CONTENT of each (monster flags, HP decode, size, known id) and then stays on the array that works (sticky). It switches to another array only when a different valid one has been seen for a full second (a new quest), and every switch is written to the log (`Monster array switched` / `found`).
+
+**Older notes on dropouts.** The overlay polls the game's memory. Polling can catch the game while it rebuilds the monster array, which gave empty or garbage reads. The reader therefore: uses only the main monster array pointer (and the address that last worked if the pointer glitches), ignores implausible slots (a large monster without a size, id 0, HP out of range), trusts a slot only after two reads in a row, and keeps the last good list for 5 seconds (`HOLD_SECONDS` in the script) when a read comes back empty. After a quest ends the overlay therefore stays for about 5 seconds before it disappears.
 
 **Screenshots.** The screenshot keys are checked every 8 ms and the overlay is hidden at once for `screenshot_hide_seconds`. Add keys such as `F12` to `screenshot_keys` for Steam or other tools. Screenshots started by something other than a key press cannot be detected.
 
 **Limits.**
 
-- Status buildup, KO and similar values are not decoded for F5, so they are not shown.
+- Status build-ups use the offsets of Relial's G1 viewer (same monster structure) and are visible only for the area host. They have not been checked against every F5 monster.
 - Capture ranges and the large / small flag come from Lvdew's monster table, built into the program. A `Config.txt` next to the script or exe (or `--config`) overrides it.
 - Windowed or borderless only, not exclusive fullscreen.
 - Built for the F5 client and its memory layout; other versions use different addresses.
